@@ -8,7 +8,7 @@ class WorkspacesController < ApplicationController
 
   def move_to_sign_in
     unless user_signed_in?
-      redirect_to user_session_path
+      redirect_to new_user_session_path
     end
   end
 end

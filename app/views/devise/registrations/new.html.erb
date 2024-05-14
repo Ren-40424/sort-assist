@@ -20,6 +20,11 @@
     <%= f.submit '登録', class: 'submit-btn' %>
   <% end %>
 
+  <div class="sign-in">
+    すでにアカウントをお持ちの方は：
+    <%= link_to 'ログイン', new_user_session_path, class: 'sign-up-button' %>
+  </div>
+
   <div class="error-message">
     <%= render partial: 'devise/shared/error_messages', locals: {model: @user} %>
   </div>

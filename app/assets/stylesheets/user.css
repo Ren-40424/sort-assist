@@ -35,6 +35,12 @@
   color: white;
 }
 
+.sign-in {
+  width: 310px;
+  font-size: 15px;
+  margin: 20px auto 0;
+}
+
 .sign-up {
   width: 300px;
   font-size: 15px;
