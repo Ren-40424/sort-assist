@@ -36,8 +36,8 @@
 
 ### Association
 
-belongs_to :user
-belongs_to :workspace
+- belongs_to :user
+- belongs_to :workspace
 
 ## sheetsテーブル
 
