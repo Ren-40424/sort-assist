@@ -26,6 +26,7 @@
   background-color: #333333;
   width: 300px;
   height: calc(100vh - 10vh);
+  padding: 20px 0;
 }
 
 .main {
