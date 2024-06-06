@@ -73,9 +73,21 @@ const submitForm = () => {
   width: 470px;
   height: 300px;
   background-color: #dddddd;
-  position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0; margin: auto;
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .dialog-title {

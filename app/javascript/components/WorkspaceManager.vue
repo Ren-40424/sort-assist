@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import CreateWorkspace from './CreateWorkspace.vue'
+import CreateWorkspace from './WorkspaceCreate.vue'
 import WorkspaceList from './WorkspaceList.vue'
 import axios from 'axios'
 
@@ -20,7 +20,6 @@ const fetchWorkspaces = async () => {
 
 const addWorkspace = (newWorkspace) => {
   workspaces.value.push(newWorkspace)
-  console.log(workspaces.value)
 }
 
 fetchWorkspaces()
