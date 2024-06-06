@@ -17,6 +17,7 @@ class Api::WorkspacesController < ApplicationController
   end
 
   def show
+    @workspace = Workspace.find(params[:id])
   end
 
   private
