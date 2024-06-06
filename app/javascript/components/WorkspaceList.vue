@@ -13,8 +13,6 @@
 const props = defineProps({
   workspaces: Array
 })
-
-console.log(props.workspaces)
 </script>
 
 <style scoped>
