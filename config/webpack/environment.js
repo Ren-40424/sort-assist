@@ -13,4 +13,13 @@ environment.config.merge({
   }
 })
 
+const webpack = require('webpack')
+
+// Vueのフラグを定義するための設定を追加
+environment.plugins.append('DefinePlugin', new webpack.DefinePlugin({
+  __VUE_OPTIONS_API__: true,
+  __VUE_PROD_DEVTOOLS__: false,
+  __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+}))
+
 module.exports = environment
