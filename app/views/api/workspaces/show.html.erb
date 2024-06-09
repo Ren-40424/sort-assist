@@ -1,4 +1,7 @@
 <%= javascript_pack_tag 'workspace_show_vue' %>
+<%= javascript_tag do %>
+  window.workspaceId = <%= @workspace.id.to_json.html_safe %>;
+<% end %>
 <div class="workspace-name">
   <%= @workspace.name %><span style="font-size: 20px"> by <%= @workspace.made_by %></span>
 </div>

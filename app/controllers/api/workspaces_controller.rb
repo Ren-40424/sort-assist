@@ -1,5 +1,5 @@
 class Api::WorkspacesController < ApplicationController
-  protect_from_forgery except: [:create]
+  protect_from_forgery except: [:create, :add_user]
 
   def index
     @workspaces = current_user.workspaces
@@ -20,10 +20,24 @@ class Api::WorkspacesController < ApplicationController
     @workspace = Workspace.find(params[:id])
   end
 
+  def add_user
+    workspace_user_params.each do |workspace_user_param|
+      WorkspaceUser.create!(workspace_user_param)
+    end
+
+    render json: { message: 'Workspace users created successfully' }, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
   private
 
   def workspace_params
     params.require(:workspace).permit(:name, :explanation)
   end
 
+  def workspace_user_params
+    params.require(:workspace_user).map do |workspace_user_param|
+      workspace_user_param.permit(:workspace_id, :user_id, :role_id)
+    end
+  end
 end
