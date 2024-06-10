@@ -90,6 +90,32 @@
   text-align: left;
 }
 
+.workspace-users {
+  margin-top: 1em;
+  height: 20em;
+  overflow: auto;
+  position: relative;
+}
+
+.workspace-users::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 4px;
+  background-color: #ebebeb; 
+}
+
+.workspace-users::-webkit-scrollbar-thumb {
+  width: 6px;
+  border-radius: 3px;
+  background-color: #505050;
+}
+
+.workspace-user {
+  display: grid;
+  grid-template-columns: 10em 8em;
+  margin-bottom: 2px;
+  gap: 5em;
+}
+
 .buttons div[id$='-btn']{
   width: 150px;
   height: 30px;

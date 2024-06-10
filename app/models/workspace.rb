@@ -7,4 +7,16 @@ class Workspace < ApplicationRecord
   def made_by
     workspace_users.find_by(role_id: 1)&.user.name
   end
+
+  def user_role(id)
+    workspace_users.find_by(user_id: id)&.role.description
+  end
+
+  def users
+    users = []
+    workspace_users.where(workspace_id: self.id).each do |record|
+      users << {user: record.user, role: record.role}
+    end
+    return users
+  end
 end

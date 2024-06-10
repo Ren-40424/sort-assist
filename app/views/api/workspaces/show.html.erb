@@ -10,7 +10,21 @@
   <div class="loading-sheet">積込み表</div>
   <div class="workspace-explanation">
     ワークスペースの説明：<br>
-    <%= @workspace.explanation %>
+    <%= @workspace.explanation %><br><br>
+    <%= @workspace.user_role(current_user.id) %><br>
+    ユーザー一覧 : <br>
+    <div class="workspace-users">
+      <% @workspace.users.each do |user| %>
+        <div class="workspace-user">
+          <div class="user-name">
+            <%= user[:user].name %>
+          </div>
+          <div class="user-role">
+            <%= user[:role].name %>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
   <div class="buttons">
     <div id="add-user-btn">ユーザーを追加する</div>

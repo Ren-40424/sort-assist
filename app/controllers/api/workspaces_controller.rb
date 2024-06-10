@@ -2,7 +2,7 @@ class Api::WorkspacesController < ApplicationController
   protect_from_forgery except: [:create, :add_user]
 
   def index
-    @workspaces = current_user.workspaces
+    @workspaces = Workspace.includes(:workspace_users).where(workspace_users: { user_id: current_user.id })
     render json: @workspaces
   end
 
