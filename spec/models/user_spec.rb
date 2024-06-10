@@ -54,7 +54,6 @@ RSpec.describe User, type: :model do
       end
       
       it 'passwordが129文字以上では登録できない' do
-        password = "a"
         @user.password = Faker::Internet.password(min_length: 129, max_length: 150)
         @user.password_confirmation = @user.password
         @user.valid?
