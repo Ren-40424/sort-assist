@@ -72,6 +72,8 @@ const closeModal = () => {
 // ページ変更機能
 const currentPage = ref(1)
 const nextPage = () => {
+  // 何も選択していないときはページを変更しない
+  if (usersData.value.length === 0) return
   currentPage.value++
 }
 
@@ -87,7 +89,6 @@ const searchResults = ref([])
 const searchUsers = async () => {
   // クエリが空の場合は検索を行わない
   if (searchQuery.value.trim() === '') {
-    // users.value = []
     return
   }
   try {
