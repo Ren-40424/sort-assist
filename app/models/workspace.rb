@@ -13,10 +13,8 @@ class Workspace < ApplicationRecord
   end
 
   def users
-    users = []
-    workspace_users.where(workspace_id: self.id).each do |record|
-      users << {user: record.user, role: record.role}
+    workspace_users.includes(:user).map do |record|
+      { user: record.user, role: record.role }
     end
-    return users
   end
 end
