@@ -4,7 +4,6 @@
 
   <!-- 1ページ目 -->
   <template v-if="currentPage === 1">
-    {{ userIds }}
     <div class="modal-top">
       <div class="modal-title">追加するユーザーを選択してください：</div>
       
@@ -31,7 +30,6 @@
   <template v-if="currentPage === 2">
     <div class="modal-top">
       <div class="modal-title">編集を許可するユーザーを選択してください</div>
-      {{ allowedEditUsers }}
       <br><br>
       <div class="close-btn" @click="closeModal">✕</div>
     </div>
@@ -48,8 +46,10 @@
         </div>
       </div>
     </div>
-    <div class="page-change-btn" @click="beforePage">戻る</div>
-    <input type="submit" class="submit-btn" placeholder="ユーザーを追加する" @click="submit">
+    <div class="modal-bottom-buttons">
+      <div class="page-change-btn" @click="beforePage">戻る</div>
+      <div class="submit-btn" @click="submit">ユーザーを追加する</div>
+    </div>
   </template>
 
 </dialog>
@@ -107,19 +107,13 @@ const searchUsers = async () => {
 const selectedUsers = ref([])
 const allowedEditUsers = ref([])
 const usersData = ref([]) // ユーザー選択後に検索を行った場合でも動くように値を保存しておく
-const userIds = ref([])
 
 watch(selectedUsers, () => {
   usersData.value = selectedUsers.value
   usersData.value.sort((a, b) => a.id - b.id); // ユーザーが選択した順番によって2ページ目の表示順が変わらないようにソート
-  userIds.value = usersData.value.map(user => user.id)
 })
 
-// selectedUsersとallowedEditUsersの情報をバックエンドに送信したい
-// selectedUsers, allowedEditUsersの中身はUserIDの配列なので、
-// まずparamsとなる配列[{user_id: 追加するユーザー, workspace_id: このワークスペースのID(getで取得が必要か?), role_id: 3}]をselectedUsersのlength分だけ作り、
-// allowedEditUsersをキーにfindメソッドで取得したrole_idを2にする
-
+// paramsに含める値を整形する
 const formatParams = (users, allowedId) => {
   const params = []
   users.forEach((user) => {
@@ -138,19 +132,18 @@ const formatParams = (users, allowedId) => {
 
 const submit = () => {
   const params = formatParams(usersData.value, allowedEditUsers.value)
-  console.log(params)
-  if (!userIds) return
+  if (usersData.value.length === 0) return
+  
   axios.post('/api/workspaces/add_user', {
     workspace_user: params
   })
+  closeModal()
 }
-
 
 </script>
 
-
-
 <style scoped>
+
 dialog[open] {
   width: 500px;
   height: 600px;
@@ -227,15 +220,23 @@ dialog[open] {
 }
 
 .page-change-btn {
+  width: 150px;
+  height: 30px;
+  margin: 15px auto 0;
+  border: none;
+  border-radius: 5px;
   background-color: #28385E;
   color: white;
-  margin: 20px auto 0;
-  width: 150px;
-  border-radius: 5px;
+  line-height: 1.7;
 }
 
 .checkbox {
   margin-right: 60px;
+}
+
+.modal-bottom-buttons {
+  display: flex;
+  justify-content: center;
 }
 
 </style>
