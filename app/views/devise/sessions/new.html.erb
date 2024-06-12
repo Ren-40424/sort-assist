@@ -1,0 +1,25 @@
+<div class="users-wrapper">
+  <div class="users-title ">
+    ログイン
+  </div>
+  
+  <%= form_with model: @user, url: user_session_path, class: 'users-main', local: true do |f|%>
+
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true ,placeholder: 'メールアドレス', class: 'input' %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, placeholder: 'パスワード', class: 'input' %>
+
+    <%= f.submit 'ログイン', class: 'submit-btn' %>
+  <% end %>
+
+  <div class="sign-up">
+    アカウントをお持ちでない方は：
+    <%= link_to '新規登録', new_user_registration_path, class: 'sign-up-button' %>
+  </div>
+
+  <div class="error-message">
+    <%= render partial: 'devise/shared/error_messages', locals: {model: @user} %>
+  </div>
+</div>
