@@ -1,5 +1,4 @@
 class Api::WorkspacesController < ApplicationController
-
   def index
     @workspaces = Workspace.includes(:workspace_users).where(workspace_users: { user_id: current_user.id })
     render json: @workspaces
@@ -28,6 +27,7 @@ class Api::WorkspacesController < ApplicationController
   rescue ActiveRecord::RecordInvalid => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
+
   private
 
   def workspace_params

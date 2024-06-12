@@ -5,11 +5,11 @@ class Workspace < ApplicationRecord
   has_many :users, through: :workspace_users
 
   def made_by
-    workspace_users.find_by(role_id: 1)&.user.name
+    workspace_users.find_by(role_id: 1)&.user&.name
   end
 
   def user_role(id)
-    workspace_users.find_by(user_id: id)&.role.description
+    workspace_users.find_by(user_id: id)&.role&.description
   end
 
   def users

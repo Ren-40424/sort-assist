@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   before do
     @user = FactoryBot.build(:user)
   end
@@ -29,7 +28,7 @@ RSpec.describe User, type: :model do
       it 'メールアドレスには@が必須であること' do
         @user.email = 'mail'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Email is invalid")
+        expect(@user.errors.full_messages).to include('Email is invalid')
       end
 
       it 'メールアドレスに一意性があること' do
@@ -37,7 +36,7 @@ RSpec.describe User, type: :model do
         another_user = FactoryBot.build(:user)
         another_user.email = @user.email
         another_user.valid?
-        expect(another_user.errors.full_messages).to include("Email has already been taken")
+        expect(another_user.errors.full_messages).to include('Email has already been taken')
       end
 
       it 'パスワードが必須であること' do
@@ -50,14 +49,14 @@ RSpec.describe User, type: :model do
         @user.password = 'pass'
         @user.password_confirmation = @user.password
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+        expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
       end
-      
+
       it 'passwordが129文字以上では登録できない' do
         @user.password = Faker::Internet.password(min_length: 129, max_length: 150)
         @user.password_confirmation = @user.password
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password is too long (maximum is 128 characters)")
+        expect(@user.errors.full_messages).to include('Password is too long (maximum is 128 characters)')
       end
 
       it 'パスワードと確認用パスワードの一致が必要であること' do
