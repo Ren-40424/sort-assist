@@ -2,7 +2,7 @@
   <div>
     <ul>
       <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list">
-        <a :href="`/api/workspaces/${workspace.id}`">{{ workspace.name }}</a>
+        <a :href="`/api/workspaces/${workspace.id}`" data-turbo="false">{{ workspace.name }}</a>
       </li>
     </ul>
   </div>
