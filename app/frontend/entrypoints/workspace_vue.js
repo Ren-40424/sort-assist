@@ -1,5 +1,5 @@
 import { createApp } from "vue"
-import WorkspaceManager from '../components/WorkspaceManager.vue';
+import WorkspaceManager from '../javascript/components/WorkspaceManager.vue';
 
 import axios from 'axios';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
