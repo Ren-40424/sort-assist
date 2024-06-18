@@ -1,11 +1,14 @@
 import { createApp } from "vue"
 import WorkspaceAddUser from '../javascript/components/WorkspaceAddUser.vue';
+import SheetCreate from '../javascript/components/SheetCreate.vue'
 
 import axios from 'axios';
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 axios.defaults.headers.common['X-CSRF-Token'] = token;
 
 document.addEventListener('turbo:load', () => {
-  const app = createApp(WorkspaceAddUser);
-  app.mount('#add-user-btn');
+  const addUser = createApp(WorkspaceAddUser);
+  addUser.mount('#add-user-btn');
+  const createSheet = createApp(SheetCreate);
+  createSheet.mount('#create-sheet-btn')
 })
