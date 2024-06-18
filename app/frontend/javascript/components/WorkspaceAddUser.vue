@@ -1,5 +1,5 @@
 <template>
-<div @click="modal.showModal" class="add-user-btn">ユーザーを追加する</div>
+<div @click="modal.showModal" class="add-user-btn">ユーザーを追加</div>
 <dialog ref="modal">
 
   <!-- 1ページ目 -->

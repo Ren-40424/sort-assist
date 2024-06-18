@@ -8,14 +8,25 @@
   <%= @workspace.name %><span style="font-size: 20px"> by <%= @workspace.made_by %></span>
 </div>
 <div class="workspace-main">
-  <div class="sorting-sheet">仕分け表</div>
-  <div class="loading-sheet">積込み表</div>
-  <div class="workspace-explanation">
-    ワークスペースの説明：<br>
-    <%= @workspace.explanation %><br><br>
-    <%= @workspace.user_role(current_user.id) %><br>
-    ユーザー一覧 : <br>
+  <!--div class="sorting-sheet">仕分け表</div>
+  <div class="loading-sheet">積込み表</div-->
+  <div class="sheet-list">
+    表一覧<br>
+    <div class="sheet">
+      <!--シート一覧を表示-->
+      表はありません
+      <div id="create-sheet-btn">表を作成する</div>
+    </div>
+    
+  </div>
+  <div class="workspace-detail">
+    <div class="workspace-explanation">
+      <strong>ワークスペースの説明：</strong><br>
+      <%= @workspace.explanation %><br><br>
+      <%= @workspace.user_role(current_user.id) %><br>
+    </div>
     <div class="workspace-users">
+      <div><strong>ユーザー一覧 : </strong></div><br>
       <% @workspace.users.each do |user| %>
         <div class="workspace-user">
           <div class="user-name">
@@ -28,8 +39,5 @@
       <% end %>
     </div>
   </div>
-  <div class="buttons">
-    <div id="add-user-btn">ユーザーを追加する</div>
-    <div id="edit-btn">編集する</div>
-  </div>
+  <div id="add-user-btn"></div>
 </div>
