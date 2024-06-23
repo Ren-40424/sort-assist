@@ -8,6 +8,9 @@ class Api::SheetsController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
   
   def sheet_params
