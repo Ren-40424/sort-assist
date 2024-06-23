@@ -13,8 +13,8 @@
 ActiveRecord::Schema[7.0].define(version: 2024_06_23_023736) do
   create_table "courses", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "create_load_sheet", default: false, null: false
     t.text "explanation"
+    t.boolean "create_load_sheet", default: false, null: false
     t.bigint "sheet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
