@@ -1,43 +1,54 @@
 <%= vite_javascript_tag 'workspace_show_vue' %>
 
 <%= javascript_tag do %>
-  window.workspaceId = <%= @workspace.id.to_json.html_safe %>;
+  window.workspaceId = <%= @workspace.id.to_json %>;
 <% end %>
 
 <div class="workspace-name">
   <%= @workspace.name %><span style="font-size: 20px"> by <%= @workspace.made_by %></span>
 </div>
 <div class="workspace-main">
-  <!--div class="sorting-sheet">仕分け表</div>
-  <div class="loading-sheet">積込み表</div-->
   <div class="sheet-list">
-    表一覧<br>
-    <div class="sheet">
-      <!--シート一覧を表示-->
-      表はありません
+    <strong>表一覧：</strong><br>
+    <div class="sheets">
+      <% if @sheets %>
+        <% @sheets.each do |sheet| %>
+          <%= link_to sheet.name, api_sheet_path %><br>
+        <% end %>
+      <% else %>
+        表はありません
+      <% end %>
       <div id="create-sheet-btn">表を作成する</div>
     </div>
     
   </div>
+  <h2>ワークスペースの情報</h2><br>
   <div class="workspace-detail">
+    
     <div class="workspace-explanation">
-      <strong>ワークスペースの説明：</strong><br>
+      <strong>説明：</strong><br>
       <%= @workspace.explanation %><br><br>
       <%= @workspace.user_role(current_user.id) %><br>
     </div>
-    <div class="workspace-users">
-      <div><strong>ユーザー一覧 : </strong></div><br>
-      <% @workspace.users.each do |user| %>
-        <div class="workspace-user">
-          <div class="user-name">
-            <%= user[:user].name %>
+
+    <div>
+      <div class="workspace-users-head">
+        <div><strong>ユーザー一覧：</strong></div>
+        <div id="add-user-btn"></div>
+      </div>
+      <div class="workspace-users">
+        <% @workspace.users.each do |user| %>
+          <div class="workspace-user">
+            <div class="user-name">
+              <%= user[:user].name %>
+            </div>
+            <div class="user-role">
+              <%= user[:role].name %>
+            </div>
           </div>
-          <div class="user-role">
-            <%= user[:role].name %>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div id="add-user-btn"></div>
+  
 </div>

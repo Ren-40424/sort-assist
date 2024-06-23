@@ -12,7 +12,7 @@
     <input class="input" id="sheet-name" type="text" v-model="sheet.name"><br>
     <label for="sheet-explanation">表の説明</label><br>
     <textarea class="input" id="sheet-explanation" type="textarea" v-model="sheet.explanation"></textarea>
-    <div @click="submit" class="submit-btn">作成</div>
+    <div @click="submit" :style="{ backgroundColor: buttonColor }" class="submit-btn">作成</div>
   </div>
 
 </dialog>
@@ -22,10 +22,10 @@
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import axios from 'axios'
 
-// モーダル開閉用
+//////////// モーダル開閉用 ////////////
 const modal = ref(null)
 const closeModal = () => {
   sheet.value.name = ''
@@ -33,18 +33,29 @@ const closeModal = () => {
   modal.value.close()
 }
 
-// シート作成機能
+
+//////////// シート作成機能 ////////////
 const sheet = ref({
   name: '',
   explanation: '',
   workspace_id: window.workspaceId
 })
 
+// 入力状況に応じて送信ボタンの色を変える
+let buttonColor = 'gray'
+watch(() => sheet.value.name, () => {
+  if(sheet.value.name === ''){
+    buttonColor = 'gray'
+  }else{
+    buttonColor = '#28385E'
+  }
+})
+
 const submit = () => {
   if (!sheet.value.name) return
   axios.post('/api/sheets', {
     sheet: sheet.value
-  }).then(response =>{
+  }).then(() =>{
     closeModal()
   }).catch(error => {
     console.log(error)
@@ -64,6 +75,7 @@ dialog[open] {
   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.30);
   border: none;
   outline: none;
+  user-select: none;
 }
 
 .modal-top {

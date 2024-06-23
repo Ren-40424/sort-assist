@@ -57,7 +57,7 @@
   width: calc(100vw - 300px);
 }
 
-/* workspace/show */
+/*////////// workspace/show //////////*/
 
 .workspace-name {
   font-size: 35px;
@@ -86,14 +86,25 @@
 }
 
 .workspace-explanation {
-  width: 400px;
+  width: 320px;
+}
+
+.workspace-users-head {
+  text-align: left;
+  display: flex;
+}
+
+#add-user-btn {
+  margin: 0 0 0 45px;
 }
 
 .workspace-users {
   margin-top: 0;
   text-align: left;
-  width: 350px;
-  height: 320px;
+  width: 320px;
+  box-sizing: content-box;
+  height: auto;
+  max-height: 320px;
   overflow: auto;
   position: relative;
 }
@@ -112,16 +123,22 @@
 
 .workspace-user {
   display: grid;
-  grid-template-columns: 12em 4em;
+  grid-template-columns: 10em 4em;
   margin-bottom: 4px;
-  gap: 2em;
+  gap: 1px;
   text-align: left;
 }
 
+.user-role {
+  width: 60px;
+}
+
 div[id$='-btn']{
-  width: 150px;
+  width: auto;;
+  max-width: 150px;
   height: 30px;
   margin: 15px auto 0;
+  padding: 0 10px;
   border: none;
   border-radius: 5px;
   background-color: #28385E;
