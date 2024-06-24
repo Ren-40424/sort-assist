@@ -11,7 +11,7 @@
     <label for="sheet-name">表の名前</label><br>
     <input class="input" id="sheet-name" type="text" v-model="sheet.name"><br>
     <label for="sheet-explanation">表の説明</label><br>
-    <textarea class="input" id="sheet-explanation" type="textarea" v-model="sheet.explanation"></textarea>
+    <textarea class="input" id="sheet-explanation" v-model="sheet.explanation"></textarea>
     <div @click="submit" :style="{ backgroundColor: buttonColor }" class="submit-btn">作成</div>
   </div>
 
@@ -61,7 +61,6 @@ const submit = () => {
     console.log(error)
   })
 }
-
 
 </script>
 
