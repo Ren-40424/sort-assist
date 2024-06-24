@@ -9,6 +9,7 @@ class Api::SheetsController < ApplicationController
   end
 
   def show
+    @sheet = Sheet.find(params[:id])
   end
 
   private
