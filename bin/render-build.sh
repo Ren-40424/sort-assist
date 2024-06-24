@@ -5,6 +5,6 @@ set -o errexit
 bundle install
 yarn install
 
-bundle exec rake assets:precompile
-bundle exec rake assets:clean
+yarn vite build
+
 bundle exec rake db:migrate
