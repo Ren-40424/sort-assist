@@ -13,6 +13,6 @@ Rails.application.routes.draw do
       end
     end
     resources :sheets, only: [:create, :show]
-    resources :courses, only: :create
+    resources :courses, only: [:index, :create]
   end
 end
