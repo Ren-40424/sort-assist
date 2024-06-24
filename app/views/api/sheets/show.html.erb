@@ -2,5 +2,7 @@
 <%= javascript_tag do %>
  window.sheetId = <%= @sheet.id.to_json %>
 <% end %>
-<h1><%= @sheet.name %></h1>
-<div id="sheet-edit"></div>
+<div class="sheet-wrapper">
+  <h1><%= @sheet.name %></h1>
+  <div id="sheet-edit"></div>
+</div>
