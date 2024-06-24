@@ -13,7 +13,7 @@
     <div class="sheets">
       <% if @sheets %>
         <% @sheets.each do |sheet| %>
-          <%= link_to sheet.name, api_sheet_path, data: { turbo: false } %><br>
+          <%= link_to sheet.name, api_sheet_path(sheet.id), data: { turbo: false } %><br>
         <% end %>
       <% else %>
         表はありません
