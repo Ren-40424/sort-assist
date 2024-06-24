@@ -58,8 +58,8 @@
 | Column            | Type       | Options                        |
 | ----------------- | ---------- | ------------------------------ |
 | name              | string     | null: false                    |
-| create_load_sheet | boolean    | null: false, default: false    |
 | explanation       | text       |                                |
+| create_load_sheet | boolean    | null: false, default: false    |
 | sheet             | references | null: false, foreign_key: true |
 
 ### Association

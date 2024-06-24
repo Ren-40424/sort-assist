@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_14_122323) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_23_023736) do
+  create_table "courses", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "explanation"
+    t.boolean "create_load_sheet", default: false, null: false
+    t.bigint "sheet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sheet_id"], name: "index_courses_on_sheet_id"
+  end
+
+  create_table "sheets", charset: "utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "explanation"
+    t.bigint "workspace_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workspace_id"], name: "index_sheets_on_workspace_id"
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
@@ -41,6 +60,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_14_122323) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "courses", "sheets"
+  add_foreign_key "sheets", "workspaces"
   add_foreign_key "workspace_users", "users"
   add_foreign_key "workspace_users", "workspaces"
 end

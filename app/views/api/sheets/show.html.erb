@@ -1,0 +1,8 @@
+<%= vite_javascript_tag 'sheet_edit_vue' %>
+<%= javascript_tag do %>
+ window.sheetId = <%= @sheet.id.to_json %>
+<% end %>
+<div class="sheet-wrapper">
+  <h1><%= @sheet.name %></h1>
+  <div id="sheet-edit"></div>
+</div>

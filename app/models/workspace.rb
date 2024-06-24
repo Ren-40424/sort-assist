@@ -3,6 +3,7 @@ class Workspace < ApplicationRecord
 
   has_many :workspace_users
   has_many :users, through: :workspace_users
+  has_many :sheets
 
   def made_by
     workspace_users.find_by(role_id: 1)&.user&.name
