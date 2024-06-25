@@ -29,7 +29,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 import axios from 'axios'
-import { defineEmits } from 'vue';
 
 //////////// モーダル開閉機能 //////////// 
 const modal = ref(null)
