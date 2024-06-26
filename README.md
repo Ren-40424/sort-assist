@@ -29,7 +29,7 @@
 ## workspace_usersテーブル
 
 | Column    | Type       | Options                        |
-| --------- | ----       | ------------------------------ |
+| --------- | ---------- | ------------------------------ |
 | workspace | references | null: false, foreign_key: true |
 | user      | references | null: false, foreign_key: true |
 | role_id   | integer    | null: false                    |
@@ -51,6 +51,7 @@
 
 - belongs_to :workspace
 - has_many :courses
+- has_many :addresses
 - has_one :specify_dates
 
 ## coursesテーブル
@@ -69,18 +70,20 @@
 
 ## addressesテーブル
 
-| Column       | Type       | Options        |
-| ------------ | ----       | -------------- |
-| district     | string     | null: false    |
-| address_from | string     | null: false    |
-| address_to   | string     | null: false    |
-| load_place   | integer    |                |
-| name         | string     |                |
-| explanation  | text       |                |
-| course       | references | optional: true |
+| Column       | Type       | Options                        |
+| ------------ | ---------- | ------------------------------ |
+| district     | string     | null: false                    |
+| address_from | string     | null: false                    |
+| address_to   | string     |                                |
+| name         | string     |                                |
+| explanation  | text       |                                |
+| load_place   | integer    |                                |
+| sheet        | references | null: false, foreign_key: true |
+| course       | references | foreign_key: true              |
 
 ### Association
 
+- belongs_to :sheet
 - belongs_to :course
 
 ## specify_datesテーブル
