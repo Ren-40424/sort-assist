@@ -55,11 +55,13 @@ watch([() => address.district, () => address.address_from], () => {
   }
 })
 
+const emit = defineEmits(['addressAdded'])
 const submit = () => {
   if (!address.district || !address.address_from) return
   axios.post('/api/addresses', {
     address: address
   }).then(() => {
+    emit('addressAdded', address)
     closeModal()
   }).catch(error => {
     console.log(error.response.data)
@@ -68,6 +70,13 @@ const submit = () => {
 </script>
 
 <style scoped>
+.add-address {
+  height: 1.2em;
+  margin-top: 5px;
+  font-weight: 600;
+  padding: 0 5px;
+}
+
 dialog[open] {
   width: 400px;
   height: 450px;
