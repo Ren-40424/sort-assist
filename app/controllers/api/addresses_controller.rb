@@ -1,4 +1,9 @@
 class Api::AddressesController < ApplicationController
+  def index
+    @addresses = Address.where(sheet_id: params[:sheet_id])
+    render json: @addresses
+  end
+  
   def create
     @address = Address.new(address_params)
     if @address.save
