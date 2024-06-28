@@ -80,6 +80,7 @@ div {
   background-color: white;
 }
 
+/* 住所一覧ホバー時に下からスライドイン 挙動に関しては要ブラッシュアップ */
 .addresses-box:hover {
   bottom: 0px;
 }
