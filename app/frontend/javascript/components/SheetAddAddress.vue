@@ -71,10 +71,8 @@ const submit = () => {
 
 <style scoped>
 .add-address {
-  height: 1.2em;
-  margin-top: 5px;
-  font-weight: 600;
-  padding: 0 5px;
+  font-size: 30px;
+  line-height: 0.55em;
 }
 
 dialog[open] {
