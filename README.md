@@ -1,101 +1,192 @@
+# Sort Assist
+
+## アプリケーション概要
+運送業社での仕分け作業に使用する表の作成を行うためのアプリケーションです。（開発中）
+
+## URL
+https://sort-assist.onrender.com
+
+## テスト時のログイン方法
+
+### Basic認証
+
+ユーザー名: admin  
+パスワード: 2222
+
+### テスト用アカウント
+
+#### ユーザー 1
+
+ユーザー名: TestUser  
+メールアドレス testuser@mail  
+パスワード: Te5tU5erPa55w0r6
+
+#### ユーザー 2
+
+ユーザー名: TestUser2  
+メールアドレス testuser2@mail  
+パスワード: Te5tU5er2Pa55w0r6
+
+# 利用方法
+
+### 1. 新規登録/ログイン
+
+未ログイン状態の場合, ログインページへと遷移されます。ユーザーアカウントを所持している場合は, メールアドレス, パスワードを入力してログインしてください。
+
+ユーザーアカウントがない場合は, ユーザー名, メールアドレス, パスワードを設定して登録を行ってください。
+
+### 2. ワークスペースの作成
+
+トップページの「新規ワークスペースを作成」ボタンをクリック, 表示されたモーダルにワークスペースの名前と説明を入力して, ワークスペースを作成してください。この際, 説明文は必須ではありません。
+
+作成されたワークスペースは一覧表示され, 表示をクリックするとワークスペース詳細ページへ遷移します。
+
+### 3. ユーザーの追加
+
+ワークスペース詳細ページ, 「ユーザー一覧」の「追加」ボタンから, 他のユーザーを自身のワークスペースに追加することができ, 共同で表を作成することができます。また, 他のユーザーに編集されたくない場合は, 権限を閲覧のみに制限することができます。
+
+「追加」ボタンをクリックすることで, ユーザー追加を行うモーダルが開きます。入力欄に追加したいユーザー名を入力してユーザーの検索を行い, 表示されたユーザーをクリックして選択してください（複数選択が可能です）。ユーザー選択が完了したら「進む」ボタンをクリックしてください。
+
+次ページでは編集を許可するユーザーを選択します。先程と同様に選択を行い, 「ユーザーを追加」ボタンをクリックしてください。以上でユーザーの追加作業は完了です。
+
+### 4. 表の作成
+
+ワークスペース詳細ページ, 「表一覧」の「表を作成」ボタンから, 実際に表を作成するページを作ることができます。
+
+「表を作成」ボタンをクリックし, 表示されたモーダルに表の名前と説明を入力して, 「作成」ボタンをクリックすることで表の作成が可能です。この際も, 説明文は必須ではありません。
+
+作成した表は一覧表示され, クリックで表詳細ページへ遷移します。
+
+### 5. コースの追加
+
+表詳細ページへ遷移したら, コースの追加を行います。青丸の「＋」ボタンをクリックすると, コース追加のためのモーダルが開きます。コース名（必須）と説明（必須でない）を入力し, 積み込み表（後述）を作成する場合はチェックボックスにチェックを入れて, 「作成」ボタンをクリックしてコースの作成を行ってください。
+
+### 6. 住所の追加(WIP)
+
+次に, 住所の追加を行います。「住所一覧」の「＋」ボタンをクリックして住所追加のためのモーダルを開き, 地区名（必須）, 番地, 名前, 備考を入力して「作成」ボタンをクリックすることで住所を追加できます。
+
+### 7. 住所をコースに割り当てる(WIP)
+
+コースと住所を作成したら, 住所を各コースにドラッグアンドドロップで配置してください。コースに配置された表は, クリックか「住所一覧」へのドラッグアンドドロップで割り当てを解除することができます。
+
+この際, 住所は先に積み下ろすものほど上に配置してください。
+
+### 8. 表のアクティブ期間を設定する(Not Started)
+
+（未着手なのでこの機能以下の要素の仕様に関しては大きく変更するかもしれません。）  
+表詳細ページで、表のアクティブ期間を変更することができます。月, 曜日, 日付の3通りの指定方法で表のアクティブ期間を設定することができます。
+
+アクティブ期間に該当する表はトップページに表示されます。
+
+### 9. 積み込み表の生成(Not Started)
+
+コース選択時に「積み込み表を生成」にチェックを入れたコースは, 積み込み表が自動で生成されます。生成された表は, アクティブ期間中にトップページに表示されます。
+
+# アプリケーションを作成した背景
+
+私は現在とある運送業者の早朝仕分け作業員として勤務しています。業務内容は, 到着した荷物を各配送コースごとに仕分けて積み込みを行うというものなのですが, 仕分けの際に使用する表が手書きなうえによく更新されるので, 少しでも表作成が便利になればと思いこのアプリケーションを作成しました。
+
+# 実装した機能の説明
+
+### ユーザー管理機能
+
+Deviseを使用して実装しました。
+
+### 各種情報登録部分
+
+RailsのビューにVue.jsコンポーネントをマウントしての実装を行いました。（非SPA）
+
+### ドラッグアンドドロップ機能
+
+Vue Draggable Plusを使用しました。
+
+# 実装予定の機能
+
+- アクティブな表が変更された時にメールを送信する機能
+- ワークスペース内でのチャット機能
+- ユーザーからのフィードバッグを受け取る機能
+
 # テーブル設計
 
-## usersテーブル
+[![Image from Gyazo](https://i.gyazo.com/632837a2ee590a0950d8611807d6d2d8.png)](https://gyazo.com/632837a2ee590a0950d8611807d6d2d8)
 
-| Column             | Type   | Options     |
-| ------------------ | ------ | ----------- |
-| name               | string | null: false |
-| email              | string | null: false |
-| encrypted_password | string | null: false |
+# 画面遷移図
 
-### Association
+[![Image from Gyazo](https://i.gyazo.com/9b070dead8f3b2dd42bd96fc8424daa9.png)](https://gyazo.com/9b070dead8f3b2dd42bd96fc8424daa9)
 
-- has_many :workspace_users
-- has_many :workspaces, through: :workspace_users
+# 開発環境
 
-## workspacesテーブル
+### バックエンド
 
-| Column      | Type   | Options     |
-| ----------- | ------ | ----------- |
-| name        | string | null: false |
-| explanation | text   |             |
+- Ruby 3.2.0  
+- Ruby on Rails 7.0.8.1
 
-### Association
+### フロントエンド
 
-- has_many :workspace_users
-- has_many :users, through: :workspace_users
-- has_many :sheets
+- Node.js v22.1.0  
+- Vue.js 3.4.27
 
-## workspace_usersテーブル
+### ビルドツール
 
-| Column    | Type       | Options                        |
-| --------- | ----       | ------------------------------ |
-| workspace | references | null: false, foreign_key: true |
-| user      | references | null: false, foreign_key: true |
-| role_id   | integer    | null: false                    |
+- Vite 5.3.1
 
-### Association
+### パッケージマネージャ
 
-- belongs_to :user
-- belongs_to :workspace
+- Yarn 1.22.22
 
-## sheetsテーブル
+### データベース
 
-| Column      | Type       | Options                        |
-| ----------- | ---------- | ------------------------------ |
-| name        | string     | null: false                    |
-| explanation | text       |                                |
-| workspace   | references | null: false, foreign_key :true |
+- PostgreSQL 14.11
 
-### Association
+### テスト
 
-- belongs_to :workspace
-- has_many :courses
-- has_one :specify_dates
+- RSpec 3.13
 
-## coursesテーブル
+### 補助ツール
 
-| Column            | Type       | Options                        |
-| ----------------- | ---------- | ------------------------------ |
-| name              | string     | null: false                    |
-| explanation       | text       |                                |
-| create_load_sheet | boolean    | null: false, default: false    |
-| sheet             | references | null: false, foreign_key: true |
+- Devise 4.9.4  
+- FactoryBot Rails 6.4.3
 
-### Association
+### テキストエディタ
 
-- belongs_to :sheet
-- has_many :addresses
+- Visual Studio Code
 
-## addressesテーブル
+### リポジトリ管理
 
-| Column       | Type       | Options        |
-| ------------ | ----       | -------------- |
-| district     | string     | null: false    |
-| address_from | string     | null: false    |
-| address_to   | string     | null: false    |
-| load_place   | integer    |                |
-| name         | string     |                |
-| explanation  | text       |                |
-| course       | references | optional: true |
+- GitHub
 
-### Association
+# ローカルでの動作方法
 
-- belongs_to :course
+以下のコマンドを順番に実行してください。
 
-## specify_datesテーブル
+1. `% git clone https://github.com/Ren-40424/sort-assist.git`  
+2. `% cd sort-assist`  
+3. `% bundle install`  
+4. `% rails db:create`  
+5. `% rails db:migrate`  
+6. `% yarn install`  
+7. `% bundle exec foreman start`(WIP) または  
+`% rails s`, `bin/vite dev`を同時に実行
 
-| Column           | Type       | Options                        |
-| ---------------- | ---------- | ------------------------------ |
-| is_active        | boolean    | null: false, default: false    |
-| month_from       | integer    |                                |
-| month_to         | integer    |                                |
-| day_of_week_from | integer    |                                |
-| day_of_week_to   | integer    |                                |
-| date_from        | date       |                                |
-| date_to          | date       |                                |
-| sheet            | references | null: false, foreign_key: true |
+# 工夫したポイント
 
-### Association
+### Vue.jsの使用
 
-- belongs_to :sheet
+SPAではありませんが, モーダル部分などでVue.jsを使用したフロントエンド実装を行いました。
+
+### ドラッグアンドドロップ機能
+
+GitHubのプロジェクト管理画面を参考に, Vue Draggable Plusを使ってドラッグアンドドロップ機能を実装しました。
+
+# 改善点
+
+### GitHubの使い方
+
+ブランチを切ったは良いが, マージを忘れてその後の作業を行ってしまったので, しっかりとプロジェクトを確認しながら実装を行いたいと感じました。
+
+### 事前の見通しの甘さ
+
+設計段階での見通しというか, アプリケーションに実際にどのような挙動をとらせるかの想像が上手くできず, DB設計や遷移図の作成に苦労したり, 仕様変更を行わなければならなくなったりしたので, 経験を積んでより設計を上手くできるようにしたいと感じました。
+
+その他, 改善点はVue.jsの扱いや実装手順などと挙げていったらきりがない程ありますが, 今後も当アプリケーションのブラッシュアップを行ったり, 学習を続けて良くしていきたいと考えています。
+
