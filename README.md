@@ -165,7 +165,7 @@ Vue Draggable Plusを使用しました。
 4. `% rails db:create`  
 5. `% rails db:migrate`  
 6. `% yarn install`  
-7. `% bundle exec foreman start`(WIP) または  
+7. `% bundle exec foreman start`または  
 `% rails s`, `bin/vite dev`を同時に実行
 
 # 工夫したポイント
