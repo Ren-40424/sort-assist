@@ -2,7 +2,7 @@
 <div :id="`course-${ course.id }`">
   <div class="course-header">
     <div class="course-name">{{ course.name }}</div>
-    <div v-if="course.create_load_sheet" class="course-icon"><span style="font-size: 12px;">🔹</span></div>
+    <div v-if="course.create_load_sheet" class="course-icon"><span style="font-size: 12px;">◆</span></div>
   </div>
   <div class="course-main">
     <slot></slot>
@@ -44,6 +44,7 @@ const props = defineProps({
   position: absolute;
   right: 5px;
   bottom: 3.5px;
+  color: #28385E;
 }
 
 .course-main {
