@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
   create_table "addresses", charset: "utf8", force: :cascade do |t|
     t.string "district", null: false
-    t.string "address_from", null: false
+    t.string "address_from"
     t.string "address_to"
     t.string "name"
     t.text "explanation"
