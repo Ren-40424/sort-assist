@@ -5,6 +5,7 @@
     <template v-if="address.address_to">~{{ address.address_to }}</template>
   </div>
 </template>
+
 <script setup>
 const props = defineProps({
   address: {
@@ -13,6 +14,7 @@ const props = defineProps({
   },
 })
 </script>
+
 <style scoped>
 * {
   font-weight: 600;
@@ -20,6 +22,8 @@ const props = defineProps({
 
 .address {
   width: max-content;
+  max-width: calc(100% - 15px);
+  overflow: hidden;
   padding: 0 5px;
   background-color: rgb(216, 216, 216);
   border-radius: 5px;

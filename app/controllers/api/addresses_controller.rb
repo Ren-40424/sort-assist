@@ -9,7 +9,7 @@ class Api::AddressesController < ApplicationController
     if @address.save
       render json: @address
     else
-      render json: @address.errors.messages, status: :unprocessable_entity
+      render json: @address.errors, status: :unprocessable_entity
     end
   end
 
