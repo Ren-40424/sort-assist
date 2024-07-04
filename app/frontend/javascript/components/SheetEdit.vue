@@ -25,7 +25,6 @@
         <Address :address="address"></Address>
     </template>
   </VueDraggable>
-  
 </div>
 
 </template>
@@ -63,6 +62,8 @@ const getAddresses = async () => {
       sheet_id: window.sheetId
     }
   })
+
+  // すでにコースに配置されている住所は住所一覧に表示しない
   response.data = response.data.filter(address => address.course_id === null);
   addresses.value = response.data
 }
@@ -92,7 +93,7 @@ const onAdd = (event) => {
   })
 }
 
-// コースに配置された住所をクリックした時に住所ボックスに戻す
+// コースに配置された住所をクリックした時に住所一覧に戻す
 const removeAddress = (course, addressId) => {
   axios.put(`/api/addresses/${addressId}`, {
     course_id: null
