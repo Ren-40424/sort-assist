@@ -69,12 +69,6 @@ const getAddresses = async () => {
 }
 
 //////////// ドラッグアンドドロップで住所を各コースに配置する機能 ////////////
-const onStart = (event) => {
-  console.log('start')
-}
-const onEnd = () => {
-
-}
 
 // 住所がコースにドラッグアンドドロップされた時にcourse_idを更新
 const onAdd = (event) => {
