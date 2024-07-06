@@ -1,7 +1,7 @@
 class Api::CoursesController < ApplicationController
   def index
-    @courses = Course.where(sheet_id: params[:sheet_id])
-    render json: @courses
+    @courses = Course.where(sheet_id: params[:sheet_id]).includes(:addresses)
+    render json: @courses.as_json(include: :addresses)
   end
 
   def create
@@ -9,7 +9,7 @@ class Api::CoursesController < ApplicationController
     if @course.save
       render json: @course
     else
-      render json: @course.errors
+      render json: @course.errors, status: :unprocessable_entity
     end
   end
 

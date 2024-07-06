@@ -63,8 +63,8 @@ const submit = () => {
  axios.post('/api/courses',  {
   course: course.value
  }).then(() => {
+  emit('courseAdded', course.value.name)
   closeModal()
-  emit('courseAdded', course.value.name) // EmitでSheetEditのgetCoursesを発火させたい
  }).catch(error => {
   console.log(error)
  })
@@ -79,7 +79,8 @@ const submit = () => {
 
 .add-course {
   height: 400px;
-  width: 250px;
+  width: 50px;
+  margin: 0 0 0 100px;
   display: flex;
   align-items: center;
   justify-content: center;
