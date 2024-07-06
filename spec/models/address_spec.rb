@@ -48,6 +48,42 @@ RSpec.describe Address, type: :model do
         expect(@address.errors.full_messages).to include('Address from 範囲指定が不要な場合は「から」の側にのみ入力してください。')
       end
 
+      it 'address_fromは先頭がハイフンだと保存できない' do
+        @address.address_from = '-123'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address from ハイフンの位置が正しくありません。')
+      end
+
+      it 'address_fromは末尾がハイフンだと保存できない' do
+        @address.address_from = '123-'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address from ハイフンの位置が正しくありません。')
+      end
+
+      it 'address_fromはハイフンが連続していると保存できない' do
+        @address.address_from = '12--3'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address from ハイフンの位置が正しくありません。')
+      end
+
+      it 'address_toは先頭がハイフンだと保存できない' do
+        @address.address_to = '-123'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address to ハイフンの位置が正しくありません。')
+      end
+
+      it 'address_toは末尾がハイフンだと保存できない' do
+        @address.address_to = '123-'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address to ハイフンの位置が正しくありません。')
+      end
+
+      it 'address_toはハイフンが連続していると保存できない' do
+        @address.address_to = '12--3'
+        @address.valid?
+        expect(@address.errors.full_messages).to include('Address to ハイフンの位置が正しくありません。')
+      end
+
       it 'load_placeは数値以外では保存できない' do
         @address.load_place = 'abc'
         @address.valid?
