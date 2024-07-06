@@ -52,7 +52,7 @@
 }
 
 .main-content {
-  background-color: #CCCCCC;
+  background-color: #FFFFFF;
   height: calc(100vh - 10vh);
   width: calc(100vw - 300px);
 }
@@ -74,6 +74,17 @@
   min-height: 200px;
 }
 
+.sheet-list-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#create-sheet-btn {
+  margin: 0;
+}
+
 .sheet {
   margin-top: 20px;
 }
@@ -89,7 +100,7 @@
   width: 320px;
 }
 
-.workspace-users-head {
+.workspace-users-top {
   text-align: left;
   display: flex;
 }
@@ -134,8 +145,7 @@
 }
 
 div[id$='-btn']{
-  width: auto;;
-  max-width: 150px;
+  width: auto;
   height: 30px;
   margin: 15px auto 0;
   padding: 0 10px;
@@ -143,7 +153,8 @@ div[id$='-btn']{
   border-radius: 5px;
   background-color: #28385E;
   color: white;
-  line-height: 1.7;
-  text-align: center;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

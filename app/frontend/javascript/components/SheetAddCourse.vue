@@ -11,17 +11,18 @@
   </div>
 
   <div class="modal-main">
-    <label for="course-name">コースの名前</label><br>
-    <input type="text" class="input" id="course-name" v-model="course.name"><br>
-    <label for="course-explanation">コースの説明</label><br>
-    <textarea class="input" id="course-explanation" v-model="course.explanation"></textarea>
-    <div class="checkbox">
-      <input type="checkbox" id="create-load-sheet" v-model="course.create_load_sheet">
-      <label for="create-load-sheet">積込み表を生成する</label> 
-    </div>
-    <div @click="submit" :style="{ backgroundColor: buttonColor }" class="submit-btn">作成</div>
+    <form @submit.prevent="submit">
+      <label for="course-name">コースの名前</label><br>
+      <input type="text" class="input" id="course-name" v-model="course.name" required="required"><br>
+      <label for="course-explanation">コースの説明</label><br>
+      <textarea class="input" id="course-explanation" v-model="course.explanation"></textarea>
+      <div class="checkbox">
+        <input type="checkbox" id="create-load-sheet" v-model="course.create_load_sheet">
+        <label for="create-load-sheet">積込み表を生成する</label> 
+      </div>
+      <input type="submit" value="作成" :style="{ backgroundColor: buttonColor }" class="submit-btn">
+    </form>
   </div>
-  
 </dialog>
 
 </template>

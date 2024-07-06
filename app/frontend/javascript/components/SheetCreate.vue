@@ -1,6 +1,5 @@
 <template>
-
-<div @click="modal.showModal" class="create-sheet-btn">表を作成する</div>
+<div @click="modal.showModal" id="create-sheet-btn">表を作成</div>
 <dialog ref="modal">
   <div class="modal-top">
     <div class="modal-title">表を作成する</div>
@@ -8,15 +7,15 @@
   </div>
 
   <div class="modal-main">
-    <label for="sheet-name">表の名前</label><br>
-    <input class="input" id="sheet-name" type="text" v-model="sheet.name"><br>
-    <label for="sheet-explanation">表の説明</label><br>
-    <textarea class="input" id="sheet-explanation" v-model="sheet.explanation"></textarea>
-    <div @click="submit" :style="{ backgroundColor: buttonColor }" class="submit-btn">作成</div>
+    <form @submit.prevent="submit">
+      <label for="sheet-name">表の名前</label><br>
+      <input class="input" id="sheet-name" type="text" v-model="sheet.name" required="required"><br>
+      <label for="sheet-explanation">表の説明</label><br>
+      <textarea class="input" id="sheet-explanation" v-model="sheet.explanation"></textarea>
+      <input type="submit" value="作成" :style="{ backgroundColor: buttonColor }" class="submit-btn">
+    </form>
   </div>
-
 </dialog>
-
 </template>
 
 
@@ -61,11 +60,13 @@ const submit = () => {
     console.log(error)
   })
 }
-
 </script>
 
 
 <style scoped>
+#create-sheet-btn {
+  max-width: 150px;
+}
 
 dialog[open] {
   width: 450px;
@@ -104,7 +105,7 @@ dialog[open] {
 }
 
 .submit-btn {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
-
 </style>

@@ -8,7 +8,7 @@ axios.defaults.headers.common['X-CSRF-Token'] = token;
 
 document.addEventListener('turbo:load', () => {
   const addUser = createApp(WorkspaceAddUser);
-  addUser.mount('#add-user-btn');
+  addUser.mount('#add-user');
   const createSheet = createApp(SheetCreate);
-  createSheet.mount('#create-sheet-btn')
+  createSheet.mount('#create-sheet')
 })

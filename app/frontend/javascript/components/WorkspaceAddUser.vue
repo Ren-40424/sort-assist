@@ -1,17 +1,18 @@
 <template>
-<div @click="modal.showModal" class="add-user-btn">追加</div>
+<div @click="modal.showModal" id="add-user-btn">追加</div>
 <dialog ref="modal">
 
   <!-- 1ページ目 -->
   <template v-if="currentPage === 1">
     <div class="modal-top">
-      <div class="modal-title">追加するユーザーを選択してください：</div>
-      
-      <div class="close-btn" @click="closeModal">✕</div>
+      <div class="modal-title">追加するユーザーを選択してください</div>
+      <div class="close" @click="closeModal">✕</div>
     </div>
 
     <div class="modal-main">
-      <input class="input" placeholder="名前を入力" v-model="searchQuery" @input="searchUsers">
+      <div class="search-input">
+        <input class="input" placeholder="名前を入力" v-model="searchQuery" @input="searchUsers">
+      </div>
       <div class="search-result">
         <div v-for="user in searchResults" :key="user.id">
           <div class="user" :id="'user-' + user.id">
@@ -22,7 +23,9 @@
           </div>
         </div>
       </div>
-      <div class="page-change-btn" @click="nextPage">進む</div>
+      <div class="modal-bottom-buttons">
+        <div class="page-change-btn" @click="nextPage" :style="{ backgroundColor: buttonColor }">進む</div>
+      </div>
     </div>
   </template>
 
@@ -31,7 +34,7 @@
     <div class="modal-top">
       <div class="modal-title">編集を許可するユーザーを選択してください</div>
       <br><br>
-      <div class="close-btn" @click="closeModal">✕</div>
+      <div class="close" @click="closeModal">✕</div>
     </div>
     
     <div class="modal-main">
@@ -114,6 +117,16 @@ watch(selectedUsers, () => {
   usersData.value.sort((a, b) => a.id - b.id); // ユーザーが選択した順番によって2ページ目の表示順が変わらないようにソート
 })
 
+// ボタンの色変更
+let buttonColor ='gray'
+watch(() => selectedUsers.value, () => {
+  if(selectedUsers.value.length === 0){
+    buttonColor = 'gray'
+  }else{
+    buttonColor ='#28385E'
+  }
+})
+
 // paramsに含める値を整形する
 const formatParams = (users, allowedId) => {
   const params = []
@@ -140,11 +153,9 @@ const submit = () => {
   })
   closeModal()
 }
-
 </script>
 
 <style scoped>
-
 dialog[open] {
   width: 500px;
   height: 600px;
@@ -160,9 +171,15 @@ dialog[open] {
   margin-bottom: 20px;
 }
 
-.close-btn {
+.close {
   text-align: end;
   cursor: pointer;
+}
+
+.search-input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .search-result {
@@ -205,7 +222,7 @@ dialog[open] {
 
 .user-name label {
   display: block;
-  padding: 0 10px;
+  padding: 2px 10px;
   text-align: center;
   text-decoration: none;
   border-radius: 5px;
@@ -220,24 +237,32 @@ dialog[open] {
   color: white;
 }
 
-.page-change-btn {
+.modal-bottom-buttons {
+  width: 75%;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+div[class$='-btn']{
   width: 150px;
   height: 30px;
-  margin: 15px auto 0;
   border: none;
   border-radius: 5px;
   background-color: #28385E;
   color: white;
-  line-height: 1.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .checkbox {
   margin-right: 60px;
 }
 
-.modal-bottom-buttons {
-  display: flex;
-  justify-content: center;
+.submit-btn {
+  margin: 0;
 }
-
 </style>
