@@ -66,6 +66,7 @@ import axios from 'axios';
 const modal = ref(null)
 
 const closeModal = () => {
+  searchResults.value = []
   selectedUsers.value = []
   searchQuery.value = ''
   currentPage.value = 1
@@ -144,18 +145,27 @@ const formatParams = (users, allowedId) => {
   return params
 }
 
+const emit = defineEmits(['userAdded'])
 const submit = () => {
   const params = formatParams(usersData.value, allowedEditUsers.value)
   if (usersData.value.length === 0) return
   
   axios.post('/api/workspaces/add_user', {
     workspace_user: params
+  }).then(() => {
+    emit('userAdded')
+    closeModal()
   })
-  closeModal()
+  
 }
 </script>
 
 <style scoped>
+#add-user-btn {
+  width: max-content;
+  margin: 0;
+}
+
 dialog[open] {
   width: 500px;
   height: 600px;

@@ -12,8 +12,10 @@ Rails.application.routes.draw do
         post 'add_user'
       end
     end
-    resources :sheets, only: [:create, :show]
+    resources :users, only: :index
+    resources :sheets, only: [:index, :create, :show]
     resources :courses, only: [:index, :create]
     resources :addresses, only: [:index, :create, :update]
+    resources :roles, only: :index
   end
 end

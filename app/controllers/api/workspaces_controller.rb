@@ -16,7 +16,6 @@ class Api::WorkspacesController < ApplicationController
 
   def show
     @workspace = Workspace.find(params[:id])
-    @sheets = Sheet.where(workspace_id: @workspace.id).order('updated_at DESC')
   end
 
   def add_user

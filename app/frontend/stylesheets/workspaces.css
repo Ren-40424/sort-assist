@@ -69,26 +69,6 @@
   display: block;
 }
 
-.sheet-list {
-  margin: 20px 0;
-  min-height: 200px;
-}
-
-.sheet-list-top {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-#create-sheet-btn {
-  margin: 0;
-}
-
-.sheet {
-  margin-top: 20px;
-}
-
 .workspace-detail {
   display: flex;
   width: 1000px;
@@ -98,50 +78,6 @@
 
 .workspace-explanation {
   width: 320px;
-}
-
-.workspace-users-top {
-  text-align: left;
-  display: flex;
-}
-
-#add-user-btn {
-  margin: 0 0 0 45px;
-}
-
-.workspace-users {
-  margin-top: 0;
-  text-align: left;
-  width: 320px;
-  box-sizing: content-box;
-  height: auto;
-  max-height: 320px;
-  overflow: auto;
-  position: relative;
-}
-
-.workspace-users::-webkit-scrollbar {
-  width: 8px;
-  border-radius: 4px;
-  background-color: #ebebeb; 
-}
-
-.workspace-users::-webkit-scrollbar-thumb {
-  width: 6px;
-  border-radius: 3px;
-  background-color: #505050;
-}
-
-.workspace-user {
-  display: grid;
-  grid-template-columns: 10em 4em;
-  margin-bottom: 4px;
-  gap: 1px;
-  text-align: left;
-}
-
-.user-role {
-  width: 60px;
 }
 
 div[id$='-btn']{

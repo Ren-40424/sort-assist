@@ -50,12 +50,14 @@ watch(() => sheet.value.name, () => {
   }
 })
 
+const emit = defineEmits(['sheetAdded'])
 const submit = () => {
   if (!sheet.value.name) return
   axios.post('/api/sheets', {
     sheet: sheet.value
   }).then(() =>{
     closeModal()
+    emit('sheetAdded', sheet.value)
   }).catch(error => {
     console.log(error)
   })
@@ -66,6 +68,7 @@ const submit = () => {
 <style scoped>
 #create-sheet-btn {
   max-width: 150px;
+  margin: 0;
 }
 
 dialog[open] {

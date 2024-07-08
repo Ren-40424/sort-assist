@@ -1,4 +1,9 @@
 class Api::SheetsController < ApplicationController
+  def index
+    @sheets = Sheet.where(workspace_id: params[:workspace_id])
+    render json: @sheets
+  end
+
   def create
     @sheet = Sheet.new(sheet_params)
     if @sheet.save

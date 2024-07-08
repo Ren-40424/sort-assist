@@ -8,47 +8,14 @@
   <%= @workspace.name %><span style="font-size: 20px"> by <%= @workspace.made_by %></span>
 </div>
 <div class="workspace-main">
-  <div class="sheet-list">
-    <strong>表一覧：</strong><br>
-    <div class="sheets">
-      <% if @sheets %>
-        <% @sheets.each do |sheet| %>
-          <%= link_to sheet.name, api_sheet_path(sheet.id), data: { turbo: false } %><br>
-        <% end %>
-      <% else %>
-        表はありません
-      <% end %>
-      <div id="create-sheet-btn">表を作成する</div>
-    </div>
-    
-  </div>
+  <div id="sheet-list"></div>
   <h2>ワークスペースの情報</h2><br>
   <div class="workspace-detail">
-    
     <div class="workspace-explanation">
       <strong>説明：</strong><br>
       <%= @workspace.explanation %><br><br>
       <%= @workspace.user_role(current_user.id) %><br>
     </div>
-
-    <div>
-      <div class="workspace-users-head">
-        <div><strong>ユーザー一覧：</strong></div>
-        <div id="add-user-btn"></div>
-      </div>
-      <div class="workspace-users">
-        <% @workspace.users.each do |user| %>
-          <div class="workspace-user">
-            <div class="user-name">
-              <%= user[:user].name %>
-            </div>
-            <div class="user-role">
-              <%= user[:role].name %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+    <div id="user-list"></div>
   </div>
-  
 </div>
