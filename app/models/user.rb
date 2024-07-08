@@ -6,6 +6,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
-  has_many :workspace_users
+  has_many :workspace_users, dependent: :destroy
   has_many :workspaces, through: :workspace_users
 end

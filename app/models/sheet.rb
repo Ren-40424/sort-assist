@@ -3,5 +3,5 @@ class Sheet < ApplicationRecord
   validates :workspace_id, presence: true
 
   belongs_to :workspace
-  has_many :courses
+  has_many :courses, dependent: :destroy
 end

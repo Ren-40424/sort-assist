@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "workspaces#index"
-  resources :users, only: :show do
+  resources :users, only: [:show, :destroy] do
     collection do
       get 'search'
     end

@@ -3,5 +3,5 @@ class Course < ApplicationRecord
   validates :sheet_id, presence: true
 
   belongs_to :sheet
-  has_many :addresses
+  has_many :addresses, dependent: :destroy
 end
