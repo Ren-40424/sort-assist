@@ -9,6 +9,6 @@
 </div>
 
 <% if @user.id == current_user.id %>
-  <div id="user-edit">編集する</div>
-  <%= link_to 'ユーザーを削除', user_path(current_user.id), data: { turbo_confirm: 'アカウントを削除すると、作成したワークスペースや表も削除されます。本当によろしいですか？', turbo: true, turbo_method: :delete } %>
+  <%= link_to 'ユーザー情報を編集する', edit_user_registration_path(current_user.id) %>
+  <%= link_to 'アカウントを削除', user_path(current_user.id), data: { turbo_confirm: 'アカウントを削除すると、作成したワークスペースや表も削除されます。本当によろしいですか？', turbo: true, turbo_method: :delete } %>
 <% end %>
