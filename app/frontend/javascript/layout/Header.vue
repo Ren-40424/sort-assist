@@ -1,22 +1,34 @@
 <template>
   <div class="header">
-    <div class="user-auth-button">
-    <!--
-      <% if user_signed_in? %>
-        <%= link_to current_user[:name], user_path(current_user), data: { turbo: false } %> さん
-        <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo: true, turbo_method: :delete } %>
-      <% else %>
-        <%= link_to '新規登録', new_user_registration_path %>
-        <%= link_to 'ログイン', new_user_session_path %>
-      <% end %>
-    -->
+    <div class="user-auth-button" v-if="user">
+      <a :href="`/users/${user.id}`">{{ user.name }}</a>
+      <div @click="logout" class="logout-button">ログアウト</div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
 
+onMounted(() => {
+  getCurrentUser()
+})
 
+const user = ref(null)
+const isAuthenticated = ref(false)
+
+const getCurrentUser = async () => {
+  const response = await axios.get('/api/sessions/show')
+  user.value = response.data;
+  isAuthenticated.value = true;
+}
+
+const logout = async () => {
+  await axios.delete('/users/sign_out')
+  isAuthenticated.value = false
+  window.location.href = '/'
+}
 </script>
 
 <style scoped>
@@ -31,11 +43,17 @@
 }
 
 .user-auth-button {
+  display: flex;
   margin-left: auto;
+  gap: 15px;
   padding-right: 20px;
 }
 
 .user-auth-button a {
   color: #ffffff;
+}
+
+.logout-button {
+  cursor: pointer;
 }
 </style>
