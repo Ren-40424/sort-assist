@@ -6,6 +6,7 @@
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "babel-loader": "^8",
+    "pinia": "^2.1.7",
     "postcss": "^8.4.38",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^16.1.0",

@@ -10,8 +10,12 @@ axios.defaults.headers.common['X-CSRF-Token'] = token;
 import { createApp } from 'vue';
 import App from "../App.vue";
 import router from '../javascript/router/router'
+import { createPinia } from "pinia";
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = createApp(App)
+  const pinia = createPinia()
+
+  app.use(pinia)
   app.use(router).mount('#app')
 })
