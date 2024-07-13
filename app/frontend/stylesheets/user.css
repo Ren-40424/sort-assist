@@ -56,7 +56,7 @@
   pointer-events: none;
 }
 
-.form-container:nth-child(n+6) label {
+.users-form__main :nth-child(n+4 of .form-container) label{
   top: -25px;
 }
 
