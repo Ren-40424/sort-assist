@@ -4,7 +4,7 @@
   <Transition>
     <div v-show="isOpen || !isMobile">
       <div class="side-bar__top">
-        <div class="logo">
+        <div class="logo"> <!-- ルートへのパスを指定する 当日の仕分け表がメインに表示されている画面 -->
           Sort-Assist
         </div>
       </div>
@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import WorkspaceManager from '../components/WorkspaceManager.vue'
+import WorkspaceManager from '../WorkspaceManager.vue'
 
 const isOpen = ref(false)
 const isMobile = ref(false)
