@@ -1,7 +1,9 @@
+/* wrapperは使わんかも */
 .wrapper {
   display: flex;
 }
 
+/* Vue コンポーネント側に移したため一時コメントアウト 後で消す
 .side-bar {
   height: 100vh;
   width: 300px;
@@ -28,12 +30,14 @@
   height: calc(100vh - 10vh);
   padding: 20px 0;
 }
+*********  サイドバーここまで *******
 
 .main {
   display: block;
 }
 
-.main-header {
+********* ヘッダーここから *********
+.header {
   background-color: #444444;
   height: 10vh;
   width: calc(100vw - 300px);
@@ -51,11 +55,13 @@
   color: #ffffff;
 }
 
+こいつは移してない
 .main-content {
   background-color: #FFFFFF;
   height: calc(100vh - 10vh);
   width: calc(100vw - 300px);
 }
+  ヘッダーここまで  */
 
 /*////////// workspace/show //////////*/
 
