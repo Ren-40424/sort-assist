@@ -90,6 +90,10 @@ const beforePage = () => {
 const searchQuery = ref('')
 const searchResults = ref([])
 
+const props = defineProps({
+  workspaceId: String
+})
+
 const searchUsers = async () => {
   // クエリが空の場合は検索を行わない
   if (searchQuery.value.trim() === '') {
@@ -98,7 +102,7 @@ const searchUsers = async () => {
   try {
     const response = await axios.get('/users/search', {
       params: {
-        workspace_id: window.workspaceId,
+        workspace_id: props.workspaceId,
         query: searchQuery.value
       }
     })
@@ -132,7 +136,7 @@ watch(() => selectedUsers.value, () => {
 const formatParams = (users, allowedId) => {
   const params = []
   users.forEach((user) => {
-    params.push({ workspace_id: window.workspaceId, user_id: user.id, role_id: isAllowed(user.id) })
+    params.push({ workspace_id: props.workspaceId, user_id: user.id, role_id: isAllowed(user.id) })
   })
 
   function isAllowed(id) { // role.idが2なら編集可能

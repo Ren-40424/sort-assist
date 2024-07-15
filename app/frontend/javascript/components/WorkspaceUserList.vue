@@ -2,7 +2,7 @@
 <div class="user-list">
   <div class="user-list-top">
     <strong>ユーザー一覧：</strong>
-    <WorkspaceAddUser @userAdded="getUsers"></WorkspaceAddUser>
+    <WorkspaceAddUser @userAdded="getUsers" :workspaceId="workspaceId"></WorkspaceAddUser>
   </div>
 
   <table>

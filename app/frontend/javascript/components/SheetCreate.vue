@@ -24,6 +24,10 @@
 import { ref, watch } from 'vue'
 import axios from 'axios'
 
+const props = defineProps({
+  workspaceId: String,
+})
+
 //////////// モーダル開閉用 ////////////
 const modal = ref(null)
 const closeModal = () => {
@@ -37,7 +41,7 @@ const closeModal = () => {
 const sheet = ref({
   name: '',
   explanation: '',
-  workspace_id: window.workspaceId
+  workspace_id: props.workspaceId
 })
 
 // 入力状況に応じて送信ボタンの色を変える

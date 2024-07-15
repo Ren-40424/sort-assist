@@ -2,7 +2,7 @@
 <div class="sheet-list">
   <div class="sheet-list-top">
     <strong>表一覧：</strong>
-    <SheetCreate @sheetAdded="getSheets"></SheetCreate>
+    <SheetCreate @sheetAdded="getSheets" :workspaceId="workspaceId"></SheetCreate>
   </div>
   <div class="sheets">
     <table>
