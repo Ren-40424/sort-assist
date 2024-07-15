@@ -30,6 +30,10 @@ import axios from 'axios';
 import Sheet from './Sheet.vue';
 import SheetCreate from './SheetCreate.vue';
 
+const props = defineProps({
+  workspaceId: String,
+})
+
 onMounted(() => {
   getSheets()
 })
@@ -38,7 +42,7 @@ const sheets = ref(null)
 const getSheets = async () => {
   const response = await axios.get('/api/sheets', {
     params: {
-      workspace_id: window.workspaceId
+      workspace_id: props.workspaceId
     }
   })
   sheets.value = response.data
@@ -49,6 +53,7 @@ const getSheets = async () => {
 .sheet-list {
   margin: 20px 0 40px 0;
   min-height: 200px;
+  min-width: 100%;
 }
 
 .sheet-list-top {

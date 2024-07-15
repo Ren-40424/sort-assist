@@ -65,6 +65,7 @@
 
 /*////////// workspace/show //////////*/
 
+/* コピー済
 .workspace-name {
   font-size: 35px;
   text-align: center;
@@ -85,6 +86,7 @@
 .workspace-explanation {
   width: 320px;
 }
+  */
 
 div[id$='-btn']{
   width: auto;

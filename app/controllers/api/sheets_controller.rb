@@ -18,7 +18,7 @@ class Api::SheetsController < ApplicationController
   end
 
   private
-  
+
   def sheet_params
     params.require(:sheet).permit(:name, :explanation, :workspace_id)
   end

@@ -32,6 +32,10 @@ import axios from 'axios';
 import WorkspaceAddUser from './WorkspaceAddUser.vue';
 import User from './User.vue';
 
+const props = defineProps({
+  workspaceId: String,
+})
+
 onMounted(() => {
   getUsers()
 })
@@ -41,7 +45,7 @@ const roles = ref(null)
 const getUsers = async () => {
   const usersResponse = await axios.get('/api/users', {
     params: {
-      workspace_id: window.workspaceId
+      workspace_id: props.workspaceId
     }
   })
   const rolesResponse = await axios.get('/api/roles')

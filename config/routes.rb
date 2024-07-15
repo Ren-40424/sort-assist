@@ -19,4 +19,5 @@ Rails.application.routes.draw do
     resources :addresses, only: [:index, :create, :update]
     resources :roles, only: :index
   end
+  get '*path', to: 'workspaces#index', constraints: ->(req) { req.format.html? }
 end

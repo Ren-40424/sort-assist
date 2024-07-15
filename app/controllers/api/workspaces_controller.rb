@@ -16,6 +16,7 @@ class Api::WorkspacesController < ApplicationController
 
   def show
     @workspace = Workspace.find(params[:id])
+    render json: @workspace
   end
 
   def add_user
