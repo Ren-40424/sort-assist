@@ -4,9 +4,9 @@
   <Transition>
     <div v-show="isOpen || !isMobile">
       <div class="side-bar__top">
-        <div class="logo"> <!-- ルートへのパスを指定する 当日の仕分け表がメインに表示されている画面 -->
+        <router-link to="/" class="logo">
           Sort-Assist
-        </div>
+        </router-link>
       </div>
       <div class="side-bar__main">
         <WorkspaceManager></WorkspaceManager>
@@ -52,6 +52,7 @@ onUnmounted(() => {
   width: 250px;
   height: 100%;
   transition: transform 0.3s ease;
+  z-index: 999;
 }
 
 .side-bar .hamburger {
