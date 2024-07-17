@@ -15,6 +15,7 @@ import Header from './javascript/components/layout/Header.vue';
 <style scoped>
 .router-view {
   transition: transform 0.3s ease;
+  height: calc(100% - 5vh);
 }
 
 @media (min-width: 768px) {
