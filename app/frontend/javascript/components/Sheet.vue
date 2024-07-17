@@ -1,6 +1,6 @@
 <template>
 <tr>
-  <td><a :href="`/api/sheets/${sheet.id}`" data-turbo="false">{{ sheet.name }}</a></td>
+  <td><router-link :to="{ name: 'Sheet', params: { id: sheet.id }}">{{ sheet.name }}</router-link></td>
   <td>ここに作成者</td>
   <td>ここに更新者</td>
   <td>ここに日時</td>

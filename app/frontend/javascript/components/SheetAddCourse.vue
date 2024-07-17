@@ -31,6 +31,10 @@
 import { ref, watch } from 'vue'
 import axios from 'axios'
 
+const props = defineProps({
+  sheetId: String
+})
+
 //////////// モーダル開閉機能 //////////// 
 const modal = ref(null)
 const closeModal = () => {
@@ -45,7 +49,7 @@ const course = ref({
   name: '',
   explanation: '',
   create_load_sheet: false,
-  sheet_id: window.sheetId
+  sheet_id: props.sheetId
 })
 
 // ボタンの色変更

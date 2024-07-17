@@ -31,6 +31,10 @@
 import axios from 'axios';
 import { reactive, ref, watch } from 'vue'
 
+const props = defineProps({
+  sheetId: String
+})
+
 //////////// モーダル開閉機能 //////////// 
 const modal = ref(null)
 const closeModal = () => {
@@ -46,7 +50,7 @@ const address = reactive({
   name: '',
   explanation: '',
   load_place: 0,
-  sheet_id: window.sheetId,
+  sheet_id: props.sheetId,
   course_id: null
 })
 
@@ -60,7 +64,7 @@ const resetForm = () => {
   address.name = ''
   address.explanation = ''
   address.load_place = 0
-  address.sheet_id = window.sheetId
+  address.sheet_id = props.sheetId
   address.course_id = null
 
   errors.value = {}
