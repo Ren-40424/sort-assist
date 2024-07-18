@@ -2,11 +2,14 @@
   <div>
     <ul>
       <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list">
-        <router-link :to="{ name: 'Workspace', params: { id: workspace.id, }}" class="workspace-link">
+        <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
           {{ workspace.name }}
         </router-link>
-        <div class="workspace-edit-button">
+        <div class="workspace-edit-button" @click="toggleMenu(workspace.id)">
           ・・・
+        </div>
+        <div v-if="visibleMenu === workspace.id" class="workspace-edit-menu">
+          <!-- ここにメニューを記述する -->te
         </div>
       </li>
     </ul>
@@ -14,10 +17,21 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const props = defineProps({
   workspaces: Array
-})
+});
 
+const visibleMenu = ref(null);
+
+const toggleMenu = (workspaceId) => {
+  if (visibleMenu.value === workspaceId) {
+    visibleMenu.value = null;
+  } else {
+    visibleMenu.value = workspaceId;
+  }
+};
 </script>
 
 <style scoped>
@@ -33,6 +47,14 @@ const props = defineProps({
   position: relative;
 }
 
+.workspace-list:hover {
+  background-color: #555555;
+}
+
+.workspace-list:hover .workspace-edit-button {
+  display: block;
+}
+
 .workspace-link {
   height: 100%;
   width: 100%;
@@ -40,14 +62,6 @@ const props = defineProps({
   align-items: center;
   padding: 0 5px;
   margin-right: 10px;
-}
-
-.workspace-list:hover {
-  background-color: #555555;
-}
-
-.workspace-list:hover .workspace-edit-button {
-  display: block;
 }
 
 .workspace-edit-button {
