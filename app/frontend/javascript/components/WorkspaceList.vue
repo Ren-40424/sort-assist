@@ -5,8 +5,8 @@
         <router-link :to="{ name: 'Workspace', params: { id: workspace.id, }}" class="workspace-link">
           {{ workspace.name }}
         </router-link>
-        <div class="workspace-edit-button" :data-workspace-id="workspace.id">
-          ...
+        <div class="workspace-edit-button">
+          ・・・
         </div>
       </li>
     </ul>
@@ -52,12 +52,13 @@ const props = defineProps({
 
 .workspace-edit-button {
   opacity: 0.5;
-  position: absolute;
-  top: -6.5px;
-  right: 10px;
-  font-size: 24px;
-  cursor: pointer;
+  letter-spacing: -10px;
+  padding-right: 8px;
   display: none;
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  cursor: pointer;
 }
 
 .workspace-edit-button:hover {
