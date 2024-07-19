@@ -2,7 +2,7 @@
     <ul>
       <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
         <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
-          {{ workspace.name}}
+          {{ workspace.name }}
         </router-link>
         <div class="workspace-menu-button" @click="toggleMenu(workspace.id)">
           ・・・
@@ -27,7 +27,9 @@ const props = defineProps({
 const route = useRoute()
 const currentWorkspaceId = ref(route.params.id)
 watch(route, () => {
-  currentWorkspaceId.value = route.params.id
+  if (route.name === 'Workspace') {
+    currentWorkspaceId.value = route.params.id
+  }
 })
 
 //////////// メニューボタンクリックでメニューを表示させる ////////////
@@ -119,6 +121,10 @@ onUnmounted(() => {
   position: absolute;
   top: -18px;
   right: -100px;
+}
+
+.workspace-menu div {
+  cursor: pointer;
 }
 
 .workspace-edit-button {
