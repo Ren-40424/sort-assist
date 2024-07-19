@@ -29,6 +29,8 @@ const currentWorkspaceId = ref(route.params.id)
 watch(route, () => {
   if (route.name === 'Workspace') {
     currentWorkspaceId.value = route.params.id
+  } else if (route.fullPath === '/') {
+    currentWorkspaceId.value = null
   }
 })
 
