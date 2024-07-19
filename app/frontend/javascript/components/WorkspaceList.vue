@@ -1,19 +1,17 @@
 <template>
-  <div>
     <ul>
-      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list">
+      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: activeWorkspace === workspace.id }" @click="toggleActiveWorkspace(workspace.id)">
         <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
           {{ workspace.name }}
         </router-link>
-        <div class="workspace-edit-button" @click="toggleMenu(workspace.id)">
+        <div class="workspace-menu-button" @click="toggleMenu(workspace.id)">
           ・・・
         </div>
-        <div v-if="visibleMenu === workspace.id" class="workspace-edit-menu">
-          <!-- ここにメニューを記述する -->te
+        <div v-if="visibleMenu === workspace.id" class="workspace-menu">
+          <!-- ここにメニューを記述する -->
         </div>
       </li>
     </ul>
-  </div>
 </template>
 
 <script setup>
@@ -23,8 +21,18 @@ const props = defineProps({
   workspaces: Array
 });
 
-const visibleMenu = ref(null);
+//////////// 表示中のワークスペースを目立たせる ////////////
+const activeWorkspace = ref(null)
+const toggleActiveWorkspace = (workspaceId) => {
+  if (activeWorkspace.value === workspaceId) {
+    return;
+  } else {
+    activeWorkspace.value = workspaceId;
+  }
+};
 
+//////////// メニューボタンクリックでメニューを表示させる ////////////
+const visibleMenu = ref(null);
 const toggleMenu = (workspaceId) => {
   if (visibleMenu.value === workspaceId) {
     visibleMenu.value = null;
@@ -40,6 +48,14 @@ const toggleMenu = (workspaceId) => {
   color: #ffffff;
 }
 
+.active {
+  background-color: #555555;
+}
+
+.active .workspace-menu-button {
+  display: block;
+}
+
 .workspace-list {
   height: 30px;
   width: 90%;
@@ -51,7 +67,7 @@ const toggleMenu = (workspaceId) => {
   background-color: #555555;
 }
 
-.workspace-list:hover .workspace-edit-button {
+.workspace-list:hover .workspace-menu-button {
   display: block;
 }
 
@@ -64,7 +80,7 @@ const toggleMenu = (workspaceId) => {
   margin-right: 10px;
 }
 
-.workspace-edit-button {
+.workspace-menu-button {
   opacity: 0.5;
   letter-spacing: -10px;
   padding-right: 8px;
@@ -75,7 +91,7 @@ const toggleMenu = (workspaceId) => {
   cursor: pointer;
 }
 
-.workspace-edit-button:hover {
+.workspace-menu-button:hover {
   opacity: 1;
 }
 </style>
