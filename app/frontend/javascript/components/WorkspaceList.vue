@@ -1,23 +1,40 @@
 <template>
-    <ul>
-      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
-        <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
-          {{ workspace.name }}
-        </router-link>
-        <div class="workspace-menu-button" @click="toggleMenu(workspace.id)">
-          ・・・
-        </div>
-        <div v-if="visibleMenu === workspace.id" class="workspace-menu">
-          <div class="workspace-edit-button">編集する</div>
-          <div class="workspace-delete-button">削除する</div>
-        </div>
-      </li>
-    </ul>
+<ul>
+  <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
+    <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
+      {{ workspace.name }}
+    </router-link>
+    <div class="workspace-menu-button" @click="toggleMenu(workspace.id)">
+      ・・・
+    </div>
+    <div v-if="visibleMenu === workspace.id" class="workspace-menu">
+      <div class="workspace-edit-button" @click="openModal(workspace)">編集する</div>
+      <div class="workspace-delete-button" @click="deleteWorkspace" :workspaceId="workspace.id">削除する</div>
+    </div>
+  </li>
+</ul>
+
+<dialog ref="modal">
+  <div class="modal-top">
+    <div class="modal-title">ワークスペースを編集</div>
+    <div class="close-btn" @click="closeModal">✕</div>
+  </div>
+  <div class="modal-main">
+    <form @submit.prevent="submit(selectedWorkspace.id)">
+      <label for="workspace-name">ワークスペースの名前</label>
+      <input type="text" id="workspace-name" class="input" v-model="selectedWorkspace.name" required="required"><br>
+      <label for="workspace-explanation">ワークスペースの説明</label>
+      <textarea id="workspace-explanation" v-model="selectedWorkspace.explanation"></textarea><br>
+      <input type="submit" value="送信"  class="submit-btn">
+    </form>
+  </div>
+</dialog>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 
 const props = defineProps({
   workspaces: Array
@@ -59,11 +76,36 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
+
+//////////// ワークスペースの編集 ////////////
+const modal = ref(null)
+const selectedWorkspace = ref({ id: null, name: '', explanation: '' })
+const openModal = (workspace) => {
+  Object.assign(selectedWorkspace.value, workspace)
+  modal.value.showModal()
+}
+
+const closeModal = () => {
+  modal.value.close()
+  selectedWorkspace.value = { id: null, name: '', explanation: '' }
+}
+
+const emit = defineEmits(['workspaceEdited']);
+const submit = (id) => {
+  if (!selectedWorkspace.value.name) return;
+  axios.put(`/api/workspaces/${id}`, {
+    workspace: selectedWorkspace.value
+  }).then(response => {
+    emit('workspaceEdited', response.data);
+    closeModal()
+  }).catch(error => {
+    console.log(error);
+  });
+};
 </script>
 
 <style scoped>
-* {
-  text-decoration: none;
+a, .workspace-menu-button, .workspace-edit-button {
   color: #ffffff;
 }
 
@@ -135,5 +177,54 @@ onUnmounted(() => {
 
 .workspace-delete-button {
   color: red;
+}
+
+/* モーダル */
+dialog[open] {
+  width: 450px;
+  height: 320px;
+  background-color: #dddddd;
+  box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.30);
+  border: none;
+  outline: none;
+  user-select: none;
+}
+
+.modal-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.close-btn {
+  cursor: pointer;
+}
+
+.modal-main {
+  text-align: left;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#workspace-name {
+  height: 30px;
+  width: 250px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+#workspace-explanation {
+  height: 60px;
+  width: 250px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

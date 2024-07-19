@@ -19,6 +19,15 @@ class Api::WorkspacesController < ApplicationController
     render json: @workspace
   end
 
+  def update
+    @workspace = Workspace.find(params[:id])
+    if @workspace.update(workspace_params)
+      render json: { notice: '編集内容を保存しました' }, status: :ok
+    else
+      render json: { errors: @workspace.errors.full_messages, alert: '保存に失敗しました' }, status: :unprocessable_entity
+    end
+  end
+
   def add_user
     workspace_user_params.each do |workspace_user_param|
       WorkspaceUser.create!(workspace_user_param)

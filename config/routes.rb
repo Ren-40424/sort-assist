@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     resources :sessions, only: :show
-    resources :workspaces, only: [:index, :create, :show] do
+    resources :workspaces, only: [:index, :create, :show, :update] do
       collection do
         post 'add_user'
       end
