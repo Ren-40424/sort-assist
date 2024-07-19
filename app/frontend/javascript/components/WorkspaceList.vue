@@ -1,35 +1,34 @@
 <template>
     <ul>
-      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: activeWorkspace === workspace.id }" @click="setActiveWorkspace(workspace.id)">
+      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
         <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
-          {{ workspace.name }}
+          {{ workspace.name}}
         </router-link>
         <div class="workspace-menu-button" @click="toggleMenu(workspace.id)">
           ・・・
         </div>
         <div v-if="visibleMenu === workspace.id" class="workspace-menu">
-          <!-- ここにメニューを記述する -->
+          <div class="workspace-edit-button">編集する</div>
+          <div class="workspace-delete-button">削除する</div>
         </div>
       </li>
     </ul>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
   workspaces: Array
 });
 
 //////////// 表示中のワークスペースを目立たせる ////////////
-const activeWorkspace = ref(null)
-const setActiveWorkspace = (workspaceId) => {
-  if (activeWorkspace.value === workspaceId) {
-    return;
-  } else {
-    activeWorkspace.value = workspaceId;
-  }
-};
+const route = useRoute()
+const currentWorkspaceId = ref(route.params.id)
+watch(route, () => {
+  currentWorkspaceId.value = route.params.id
+})
 
 //////////// メニューボタンクリックでメニューを表示させる ////////////
 const visibleMenu = ref(null);
@@ -40,6 +39,22 @@ const toggleMenu = (workspaceId) => {
     visibleMenu.value = workspaceId;
   }
 };
+
+//////////// メニュー以外をクリックするとメニューが閉じる ////////////
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.workspace-menu') && !event.target.closest('.workspace-menu-button')) {
+    visibleMenu.value = null;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
 </script>
 
 <style scoped>
@@ -89,9 +104,28 @@ const toggleMenu = (workspaceId) => {
   top: 6px;
   right: 10px;
   cursor: pointer;
+  user-select: none;
 }
 
 .workspace-menu-button:hover {
   opacity: 1;
+}
+
+.workspace-menu {
+  height: max-content;
+  width: max-content;
+  padding: 10px;
+  background-color: #555555;
+  position: absolute;
+  top: -18px;
+  right: -100px;
+}
+
+.workspace-edit-button {
+  margin-bottom: 10px;
+}
+
+.workspace-delete-button {
+  color: red;
 }
 </style>
