@@ -1,6 +1,6 @@
 <template>
     <ul>
-      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: activeWorkspace === workspace.id }" @click="toggleActiveWorkspace(workspace.id)">
+      <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: activeWorkspace === workspace.id }" @click="setActiveWorkspace(workspace.id)">
         <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
           {{ workspace.name }}
         </router-link>
@@ -23,7 +23,7 @@ const props = defineProps({
 
 //////////// 表示中のワークスペースを目立たせる ////////////
 const activeWorkspace = ref(null)
-const toggleActiveWorkspace = (workspaceId) => {
+const setActiveWorkspace = (workspaceId) => {
   if (activeWorkspace.value === workspaceId) {
     return;
   } else {
