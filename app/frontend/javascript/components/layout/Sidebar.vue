@@ -9,7 +9,7 @@
         </router-link>
       </div>
       <div class="side-bar__main">
-        <WorkspaceManager></WorkspaceManager>
+        <WorkspaceManager @sidebarUpdated="sidebarUpdated"></WorkspaceManager>
       </div>
     </div>
   </Transition>
@@ -39,6 +39,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
 });
+
+const emit = defineEmits(['sidebarUpdated'])
+const sidebarUpdated = () => {
+  emit('sidebarUpdated')
+}
 
 </script>
 

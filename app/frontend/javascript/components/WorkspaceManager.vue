@@ -12,10 +12,14 @@ import WorkspaceList from './WorkspaceList.vue'
 import axios from 'axios'
 
 const workspaces = ref([])
-
-const fetchWorkspaces = async () => {
+const emit = defineEmits(['sidebarUpdated'])
+const fetchWorkspaces = async (isCurrentPage) => {
   const response = await axios.get('/api/workspaces')
   workspaces.value = response.data
+  // 現在開いているワークスペースの内容を編集した際に再レンダリングするための処理
+  if (isCurrentPage) {
+    emit('sidebarUpdated')
+  }
 }
 
 const addWorkspace = (newWorkspace) => {

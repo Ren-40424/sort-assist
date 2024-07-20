@@ -95,8 +95,8 @@ const submit = (id) => {
   if (!selectedWorkspace.value.name) return;
   axios.put(`/api/workspaces/${id}`, {
     workspace: selectedWorkspace.value
-  }).then(response => {
-    emit('workspaceEdited', response.data);
+  }).then(() => {
+    emit('workspaceEdited', id == route.params.id);
     closeModal()
   }).catch(error => {
     console.log(error);
