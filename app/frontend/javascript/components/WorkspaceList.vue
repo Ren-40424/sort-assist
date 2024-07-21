@@ -1,4 +1,5 @@
 <template>
+  <div class="list-top">ワークスペース一覧</div>
 <ul>
   <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
     <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
@@ -9,7 +10,7 @@
     </div>
     <div v-if="visibleMenu === workspace.id" class="workspace-menu">
       <div class="workspace-edit-button" @click="openModal(workspace)">編集する</div>
-      <div class="workspace-delete-button" @click="deleteWorkspace" :workspaceId="workspace.id">削除する</div>
+      <div class="workspace-delete-button" @click="deleteWorkspace(workspace.id)" :workspaceId="workspace.id">削除する</div>
     </div>
   </li>
 </ul>
@@ -33,7 +34,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 
 const props = defineProps({
@@ -90,22 +91,42 @@ const closeModal = () => {
   selectedWorkspace.value = { id: null, name: '', explanation: '' }
 }
 
-const emit = defineEmits(['workspaceEdited']);
+const emit = defineEmits(['workspaceUpdated']);
 const submit = (id) => {
   if (!selectedWorkspace.value.name) return;
   axios.put(`/api/workspaces/${id}`, {
     workspace: selectedWorkspace.value
   }).then(() => {
-    emit('workspaceEdited', id == route.params.id);
+    emit('workspaceUpdated', id == route.params.id);
     closeModal()
   }).catch(error => {
     console.log(error);
   });
 };
+
+//////////// ワークスペースを削除 ////////////
+const router = useRouter()
+const deleteWorkspace = async (id) => {
+  const conf = confirm('ワークスペースを削除しますか？')
+  if (conf) {
+    await axios.delete(`/api/workspaces/${id}`,{
+      params: {
+        id: id
+      }
+    }).then(() => {
+      if (route.params.id == id) {
+        router.replace('/')
+      }
+      emit('workspaceUpdated');
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
 </script>
 
 <style scoped>
-a, .workspace-menu-button, .workspace-edit-button {
+a, .workspace-menu-button, .workspace-edit-button, .list-top {
   color: #ffffff;
 }
 
@@ -115,6 +136,15 @@ a, .workspace-menu-button, .workspace-edit-button {
 
 .active .workspace-menu-button {
   display: block;
+}
+
+.list-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ffffff;
+  margin: 0 40px;
+  padding-bottom: 2px;
 }
 
 .workspace-list {

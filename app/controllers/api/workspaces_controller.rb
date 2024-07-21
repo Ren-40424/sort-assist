@@ -28,6 +28,15 @@ class Api::WorkspacesController < ApplicationController
     end
   end
 
+  def destroy
+    @workspace = Workspace.find(params[:id])
+    if @workspace.destroy
+      render json: { notice: 'ワークスペースを削除しました' }, status: :ok
+    else
+      render json: @workspace.errors, status: :unprocessable_entity
+    end
+  end
+
   def add_user
     workspace_user_params.each do |workspace_user_param|
       WorkspaceUser.create!(workspace_user_param)

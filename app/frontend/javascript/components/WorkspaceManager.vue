@@ -1,6 +1,6 @@
 <template>
   <div>
-    <WorkspaceList :workspaces="workspaces" @workspaceEdited="fetchWorkspaces"></WorkspaceList>
+    <WorkspaceList :workspaces="workspaces" @workspaceUpdated="fetchWorkspaces"></WorkspaceList>
     <CreateWorkspace @workspaceCreated="addWorkspace"/>
   </div>
 </template>
