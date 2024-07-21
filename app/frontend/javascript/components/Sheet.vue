@@ -2,17 +2,30 @@
 <tr v-if="isTightScreen">
   <td><router-link :to="{ name: 'Sheet', params: { id: sheet.id }}">{{ sheet.name }}</router-link></td>
   <td>ここに日時</td>
-  <div class="sheet-menu-button">
+
+  <div class="sheet-menu-button" @click="toggleMenu(sheet.id)">
     ・・・
   </div>
+
+  <div v-if="visibleMenu == sheet.id" class="sheet-menu">
+    <div class="sheet-edit-button" @click="openModal(sheet)">編集する</div>
+    <div class="sheet-delete-button" @click="deleteSheet(sheet.id)" :sheetId="sheet.id">削除する</div>
+  </div>
 </tr>
+
 <tr v-else>
   <td><router-link :to="{ name: 'Sheet', params: { id: sheet.id }}">{{ sheet.name }}</router-link></td>
   <td>ここに作成者</td>
   <td>ここに更新者</td>
   <td>ここに日時</td>
-  <div class="sheet-menu-button">
+
+  <div class="sheet-menu-button" @click="toggleMenu(sheet.id)">
     ・・・
+  </div>
+
+  <div v-if="visibleMenu == sheet.id" class="sheet-menu">
+    <div class="sheet-edit-button" @click="openModal(sheet)">編集する</div>
+    <div class="sheet-delete-button" @click="deleteSheet(sheet.id)" :sheetId="sheet.id">削除する</div>
   </div>
 </tr>
 </template>
@@ -26,6 +39,35 @@ const props = defineProps({
     required: true,
   },
 })
+
+//////////// メニューボタンクリックでメニューを表示させる ////////////
+const visibleMenu = ref(0);
+const toggleMenu = (sheetId) => {
+  if (visibleMenu.value === sheetId) {
+    visibleMenu.value = null;
+  } else {
+    visibleMenu.value = sheetId;
+  }
+};
+
+//////////// メニュー以外をクリックするとメニューが閉じる ////////////
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.sheet-menu') && !event.target.closest('.sheet-menu-button')) {
+    visibleMenu.value = null;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+//////////// TODO: シート編集機能////////////
+
+//////////// TODO: シート削除機能 ////////////
 
 //////////// レスポンシブ対応 ////////////
 const isTightScreen = ref(window.innerWidth < 1024)
@@ -67,5 +109,29 @@ tr:hover .sheet-menu-button {
 
 .sheet-menu-button:hover {
   opacity: 1;
+}
+
+.sheet-menu {
+  height: max-content;
+  width: max-content;
+  padding: 10px;
+  background-color: #6f6f6f;
+  position: absolute;
+  top: -10px;
+  right: 40px;
+  color: #ffffff;
+  z-index: 999;
+}
+
+.sheet-menu div {
+  cursor: pointer;
+}
+
+.sheet-edit-button {
+  margin-bottom: 10px;
+}
+
+.sheet-delete-button {
+  color: red;
 }
 </style>
