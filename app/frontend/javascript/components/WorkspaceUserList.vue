@@ -56,7 +56,7 @@ const getUsers = async () => {
 
 <style scoped>
 .user-list {
-  width: 270px;
+  width: 400px;
 }
 
 .user-list-top {
@@ -77,7 +77,7 @@ th {
 }
 
 .table-body {
-  max-height: 320px;
+  max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
 }

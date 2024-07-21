@@ -21,6 +21,7 @@ const updateRouterView = () => {
 .router-view {
   transition: transform 0.3s ease;
   height: calc(100% - 5vh);
+  overflow-x: hidden;
 }
 
 @media (min-width: 768px) {

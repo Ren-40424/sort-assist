@@ -81,25 +81,16 @@ onUnmounted(() => {
   margin-bottom: 20px;
 }
 
-table {
+.sheets {
   margin: 0 auto;
+}
+
+table {
   border-collapse: collapse;
 }
 
 thead {
   border-bottom: 2px solid #505050;
-}
-
-@media (max-width: 768) {
-  table {
-    width: 60%;
-  }
-}
-
-@media (max-width: 768) {
-  table {
-    width: 80%;
-  }
 }
 
 </style>

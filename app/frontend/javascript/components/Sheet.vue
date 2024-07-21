@@ -59,7 +59,6 @@ tr {
   right: 0px;
   cursor: pointer;
   user-select: none;
-  background-color: red;
 }
 
 tr:hover .sheet-menu-button {
