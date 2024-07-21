@@ -1,6 +1,6 @@
 <template>
 <div :class="{ open: isOpen }" class="side-bar">
-  <button class="hamburger" @click="toggleSidebar">☰</button>
+  <button :class="{ 'hamburger-open': isOpen }"class="hamburger" @click="toggleSidebar">☰</button>
   <Transition>
     <div v-show="isOpen || !isMobile">
       <div class="side-bar__top">
@@ -70,6 +70,7 @@ const sidebarUpdated = () => {
   top: 8px;
   right: -90px;
   cursor: pointer;
+  transition: transform 0.1s ease;
 }
 
 .side-bar__top {
@@ -105,6 +106,10 @@ const sidebarUpdated = () => {
 
   .side-bar .hamburger {
     display: block;
+  }
+
+  .side-bar .hamburger.hamburger-open {
+    transform: translateX(-50px);
   }
 }
 
