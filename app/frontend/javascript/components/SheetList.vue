@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <template v-for="(sheet) in sheets">
-          <Sheet :sheet="sheet"></Sheet>
+          <Sheet :sheet="sheet" @sheetUpdated="getSheets"></Sheet>
         </template>
       </tbody>
     </table>

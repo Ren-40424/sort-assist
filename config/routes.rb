@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: :index
-    resources :sheets, only: [:index, :create, :show]
+    resources :sheets, only: [:index, :create, :show, :update, :destroy]
     resources :courses, only: [:index, :create]
     resources :addresses, only: [:index, :create, :update]
     resources :roles, only: :index
