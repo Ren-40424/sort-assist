@@ -13,6 +13,15 @@ class Api::CoursesController < ApplicationController
     end
   end
 
+  def update
+    @course = Course.find(params[:id])
+    if @course.update(course_params)
+      render json: @course
+    else
+      render json: @course.errors, status: :unprocessable_entity
+    end
+  end
+
   def update_create_load_sheet
     @course = Course.find(params[:id])
     if @course.update(create_load_sheet_param)

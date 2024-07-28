@@ -2,7 +2,7 @@
 <div class="sheet-wrapper">
   <div class="courses">
     <template v-for="(course) in courses">
-      <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu">
+      <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="getCourses">
         <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd">
           <template v-for="(address) in course.addresses">
             <Address :address="address" @click="removeAddress(course, address.id)"></Address>
