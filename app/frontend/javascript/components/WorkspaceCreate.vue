@@ -11,7 +11,7 @@
   <div class="modal-main">
     <form @submit.prevent="submit">
       <label for="workspace-name">ワークスペースの名前</label>
-      <input type="text" id="workspace-name" class="input" v-model="workspace.name" required="required"><br>
+      <input type="text" id="workspace-name" class="input" v-model="workspace.name" required="required"><br><br>
       <label for="workspace-explanation">ワークスペースの説明</label>
       <textarea id="workspace-explanation" v-model="workspace.explanation"></textarea><br>
       <input type="submit" value="作成する" :style="{ backgroundColor: buttonColor }" class="submit-btn">

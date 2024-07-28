@@ -7,8 +7,8 @@
     <SheetList :key="routeKey" :workspaceId="workspaceId"></SheetList>
     <h2>ワークスペースの情報</h2><br>
     <div class="workspace-detail">
-      <div class="workspace-explanation">
-        <strong>説明：</strong><br>
+      <div v-if="workspace.explanation !== ''" class="workspace-explanation">
+        <strong>説明</strong><br><br>
         {{ workspace.explanation }}<br><br>
       </div>
       <WorkspaceUserList :key="routeKey" :workspaceId="workspaceId"></WorkspaceUserList>
@@ -74,11 +74,21 @@ watch(
   .workspace-container {
     min-width: calc(100% - 300px);
   }
+
+  .workspace-explanation {
+    width: 60%;
+    max-width: 500px;
+  }
 }
 
 @media (max-width: 768px) {
   .workspace-container {
     max-width: 100%;
+    padding: 20px 0;
+  }
+
+  .workspace-explanation {
+    width: 80%;
   }
 }
 
@@ -94,15 +104,12 @@ watch(
 
 .workspace-detail {
   display: flex;
-  max-width: calc(100% - 300px);
   flex-wrap: wrap;
   row-gap: 30px;
-  margin: 0 auto;
   justify-content: space-around;
 }
 
 .workspace-explanation {
   text-align: center;
-  width: 320px;
 }
 </style>

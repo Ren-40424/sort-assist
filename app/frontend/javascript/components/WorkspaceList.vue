@@ -26,7 +26,7 @@
       <input type="text" id="workspace-name" class="input" v-model="selectedWorkspace.name" required="required"><br>
       <label for="workspace-explanation">ワークスペースの説明</label>
       <textarea id="workspace-explanation" v-model="selectedWorkspace.explanation"></textarea><br>
-      <input type="submit" value="送信"  class="submit-btn">
+      <input type="submit" value="送信" class="submit-btn">
     </form>
   </div>
 </dialog>
