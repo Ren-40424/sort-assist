@@ -1,8 +1,12 @@
 <template>
 <div :id="`course-${ course.id }`">
   <div class="course-header">
+    <div class="course-icon" @click="toggleCreate">
+      <template v-if="createLoadSheet" class="course-icon">◆</template>
+      <template v-else class="course-icon">◇</template>
+    </div>
     <div class="course-name">{{ course.name }}</div>
-    <div v-if="course.create_load_sheet" class="course-icon"><span style="font-size: 12px;">◆</span></div>
+    <div class="course-menu-button">・・・</div>
   </div>
   <div class="course-main">
     <slot></slot>
@@ -11,6 +15,9 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+
 const props = defineProps({
   course: {
     type: Object,
@@ -20,6 +27,20 @@ const props = defineProps({
     type: Array,
   },
 })
+
+//////////// 積込み表を作成するかの切り替え機能 ////////////
+const createLoadSheet = ref(props.course.create_load_sheet)
+const toggleCreate = () => {
+  createLoadSheet.value = !createLoadSheet.value
+  updateCreateLoadSheet(createLoadSheet.value)
+}
+
+const updateCreateLoadSheet = async (new_value) => {
+  await axios.patch(`/api/courses/${props.course.id}/update_create_load_sheet`, {
+    create_load_sheet: new_value
+  })
+}
+
 </script>
 
 <style scoped>
@@ -41,10 +62,32 @@ const props = defineProps({
 }
 
 .course-icon {
+  font-size: 14px;
+  font-weight: bolder;
   position: absolute;
-  right: 5px;
+  left: 5px;
   bottom: 3.5px;
   color: #28385E;
+}
+
+.course-menu-button {
+  opacity: 0.5;
+  letter-spacing: -10px;
+  padding-right: 8px;
+  display: none;
+  position: absolute;
+  top: 2.5px;
+  right: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+[id^='course']:hover .course-menu-button {
+  display: block;
+}
+
+.course-menu-button:hover {
+  opacity: 1;
 }
 
 .course-main {

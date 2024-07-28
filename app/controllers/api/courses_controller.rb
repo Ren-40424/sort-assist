@@ -13,9 +13,22 @@ class Api::CoursesController < ApplicationController
     end
   end
 
+  def update_create_load_sheet
+    @course = Course.find(params[:id])
+    if @course.update(create_load_sheet_param)
+      render json: @course
+    else
+      render json: @course.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def course_params
     params.require(:course).permit(:name, :explanation, :create_load_sheet, :sheet_id)
+  end
+
+  def create_load_sheet_param
+    params.require(:course).permit(:create_load_sheet)
   end
 end
