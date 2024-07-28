@@ -3,7 +3,7 @@
   <td><router-link :to="{ name: 'Sheet', params: { id: sheet.id }}">{{ sheet.name }}</router-link></td>
   <td>ここに日時</td>
 
-  <div class="sheet-menu-button" @click="toggleMenu(sheet.id)">
+  <div class="sheet-menu-button" @click="menuClicked">
     ・・・
   </div>
 
@@ -19,7 +19,7 @@
   <td>ここに更新者</td>
   <td>ここに日時</td>
 
-  <div class="sheet-menu-button" @click="toggleMenu(sheet.id)">
+  <div class="sheet-menu-button" @click="menuClicked(sheet.id)">
     ・・・
   </div>
 
@@ -56,32 +56,18 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  visibleMenu: {
+    type: Number,
+  },
 })
 
+const emit = defineEmits(['clicked', 'sheetUpdated'])
+
 //////////// メニューボタンクリックでメニューを表示させる ////////////
-const visibleMenu = ref(0);
-const toggleMenu = (sheetId) => {
-  if (visibleMenu.value === sheetId) {
-    visibleMenu.value = null;
-  } else {
-    visibleMenu.value = sheetId;
-  }
-};
-
-//////////// メニュー以外をクリックするとメニューが閉じる ////////////
-const handleClickOutside = (event) => {
-  if (!event.target.closest('.sheet-menu') && !event.target.closest('.sheet-menu-button')) {
-    visibleMenu.value = null;
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
-
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
+const menuClicked = (sheetId) => {
+  emit('clicked', sheetId);
+  console.log(`visibleMenu:${props.visibleMenu}`)
+}
 
 //////////// シート編集機能////////////
 const modal = ref(null)
@@ -96,7 +82,6 @@ const closeModal = () => {
   selectedSheet.value = { id: null, name: '', explanation: '' }
 }
 
-const emit = defineEmits(['sheetUpdated']);
 const submit = (id) => {
   if (!selectedSheet.value.name) return;
   axios.put(`/api/sheets/${id}`, {

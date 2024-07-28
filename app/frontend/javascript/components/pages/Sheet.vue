@@ -2,7 +2,7 @@
 <div class="sheet-wrapper">
   <div class="courses">
     <template v-for="(course) in courses">
-      <Course :course="course" :addresses="course.addresses">
+      <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu">
         <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd">
           <template v-for="(address) in course.addresses">
             <Address :address="address" @click="removeAddress(course, address.id)"></Address>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import SheetAddCourse from '../SheetAddCourse.vue';
 import Course from '../Course.vue';
 import axios from 'axios'
@@ -87,7 +87,7 @@ const onAdd = (event) => {
   axios.put(`/api/addresses/${addressId}`, {
     course_id: courseId
   }).then(() => {
-    console.log('Update!')
+    console.log('Updaaaaaate!')
   }).catch(error => {
     console.log(error.response.data)
   })
@@ -105,6 +105,31 @@ const removeAddress = (course, addressId) => {
     console.log(error.response.data)
   })
 }
+
+//////////// メニュー管理 ////////////
+const visibleMenu = ref(null)
+const manageMenu = (courseId) => {
+  if (visibleMenu.value === courseId) {
+    visibleMenu.value = null
+  } else {
+    visibleMenu.value = courseId
+  }
+}
+
+//////////// メニュー以外の場所をクリックするとメニューを閉じる ////////////
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.course-menu') && !event.target.closest('.course-menu-button')) {
+    visibleMenu.value = null;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 
 </script>
 

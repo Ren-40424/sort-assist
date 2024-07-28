@@ -2,7 +2,7 @@
 
 <div class="courses">
   <template v-for="(course) in courses">
-    <Course :course="course" :addresses="course.addresses">
+    <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @menuClicked="manageMenu">
       <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd">
         <template v-for="(address) in course.addresses">
           <Address :address="address" @click="removeAddress(course, address.id)"></Address>
@@ -37,6 +37,7 @@ import axios from 'axios'
 import SheetAddAddress from './SheetAddAddress.vue';
 import Address from './Address.vue'
 import { VueDraggable } from 'vue-draggable-plus';
+import { useRoute } from 'vue-router';
 
 const courses = ref([]);
 const addresses = ref([]);
@@ -47,10 +48,11 @@ onMounted(() => {
 })
 
 // ビューからカレントページのsheet_idを受け取り、該当するsheet_idのコースを取得
+const route = useRoute()
 const getCourses = async () => {
   const response = await axios.get('/api/courses', {
     params: {
-      sheet_id: window.sheetId
+      sheet_id: route.params.id
     }
   })
   courses.value = response.data
@@ -59,7 +61,7 @@ const getCourses = async () => {
 const getAddresses = async () => {
   const response = await axios.get('/api/addresses', {
     params: {
-      sheet_id: window.sheetId
+      sheet_id: route.params.id
     }
   })
 
@@ -69,6 +71,8 @@ const getAddresses = async () => {
 }
 
 //////////// ドラッグアンドドロップで住所を各コースに配置する機能 ////////////
+
+// 追加予定：ドラッグ中のみ要素の色を変える //
 
 // 住所がコースにドラッグアンドドロップされた時にcourse_idを更新
 const onAdd = (event) => {
@@ -100,6 +104,16 @@ const removeAddress = (course, addressId) => {
   })
 }
 
+//////////// 複数同時にメニューが開かないよう管理する ////////////
+const visibleMenu = ref(null)
+const manageMenu = (courseId) => {
+  if (visibleMenu.value === courseId) {
+    visibleMenu.value = null;
+  } else {
+    visibleMenu.value = courseId
+  }
+  console.log(`${visibleMenu}:${courseId}`)
+}
 </script>
 
 <style scoped>

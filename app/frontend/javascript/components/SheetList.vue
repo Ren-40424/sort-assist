@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <template v-for="(sheet) in sheets">
-          <Sheet :sheet="sheet" @sheetUpdated="getSheets"></Sheet>
+          <Sheet :sheet="sheet" @sheetUpdated="getSheets" :visibleMenu="visibleMenu" @clicked="manageMenu"></Sheet>
         </template>
       </tbody>
     </table>
@@ -51,6 +51,32 @@ const getSheets = async () => {
   })
   sheets.value = response.data
 }
+
+//////////// メニュー管理 ////////////
+const visibleMenu = ref(null)
+const manageMenu = (sheetId) => {
+  console.log('manage')
+  if (visibleMenu.value === sheetId) {
+    visibleMenu.value = null
+  } else {
+    visibleMenu.value = sheetId
+  }
+}
+
+//////////// メニュー以外の場所をクリックするとメニューを閉じる ////////////
+const handleClickOutside = (event) => {
+  if (!event.target.closest('.sheet-menu') && !event.target.closest('.sheet-menu-button')) {
+    visibleMenu.value = null;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 
 //////////// レスポンシブ対応 ////////////
 const isTightScreen = ref(window.innerWidth < 1024)
