@@ -43,12 +43,16 @@ const props = defineProps({
 
 //////////// 表示中のワークスペースを目立たせる ////////////
 const route = useRoute()
-const currentWorkspaceId = ref(route.params.id)
+// 表編集ページでリロードするとバグるので対策としてローカルストレージに値を保存
+const currentWorkspaceId = ref(localStorage.getItem('currentWorkspaceId') || route.params.id)
+
 watch(route, () => {
   if (route.name === 'Workspace') {
     currentWorkspaceId.value = route.params.id
+    localStorage.setItem('currentWorkspaceId', route.params.id)
   } else if (route.fullPath === '/') {
     currentWorkspaceId.value = null
+    localStorage.removeItem('currentWorkspaceId')
   }
 })
 
