@@ -55,7 +55,6 @@ const getSheets = async () => {
 //////////// メニュー管理 ////////////
 const visibleMenu = ref(null)
 const manageMenu = (sheetId) => {
-  console.log('manage')
   if (visibleMenu.value === sheetId) {
     visibleMenu.value = null
   } else {

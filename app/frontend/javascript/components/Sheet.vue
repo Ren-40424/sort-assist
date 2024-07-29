@@ -3,7 +3,7 @@
   <td><router-link :to="{ name: 'Sheet', params: { id: sheet.id }}">{{ sheet.name }}</router-link></td>
   <td>ここに日時</td>
 
-  <div class="sheet-menu-button" @click="menuClicked">
+  <div class="sheet-menu-button" @click="menuClicked(sheet.id)">
     ・・・
   </div>
 
@@ -66,7 +66,6 @@ const emit = defineEmits(['clicked', 'sheetUpdated'])
 //////////// メニューボタンクリックでメニューを表示させる ////////////
 const menuClicked = (sheetId) => {
   emit('clicked', sheetId);
-  console.log(`visibleMenu:${props.visibleMenu}`)
 }
 
 //////////// シート編集機能////////////
