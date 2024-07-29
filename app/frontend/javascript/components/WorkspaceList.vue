@@ -118,7 +118,7 @@ const deleteWorkspace = async (id) => {
         id: id
       }
     }).then(() => {
-      if (route.params.id == id) {
+      if (currentWorkspaceId.value == id) {
         router.replace('/')
       }
       emit('workspaceUpdated');
