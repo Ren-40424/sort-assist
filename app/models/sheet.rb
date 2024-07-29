@@ -4,4 +4,5 @@ class Sheet < ApplicationRecord
 
   belongs_to :workspace
   has_many :courses, dependent: :destroy
+  has_many :addresses, dependent: :destroy
 end
