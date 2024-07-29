@@ -2,7 +2,7 @@
 <div class="sheet-wrapper">
   <div class="courses">
     <template v-for="(course) in courses">
-      <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="getCourses">
+      <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="fetchData">
         <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd">
           <template v-for="(address) in course.addresses">
             <Address :address="address" @click="removeAddress(course, address.id)"></Address>
@@ -46,9 +46,13 @@ const routes = useRoute()
 const sheetId = ref(routes.params.id)
 
 onMounted(() => {
+  fetchData()
+})
+
+const fetchData = () => {
   getCourses()
   getAddresses()
-})
+}
 
 // ビューからカレントページのsheet_idを受け取り、該当するsheet_idのコースを取得
 const getCourses = async () => {
@@ -87,7 +91,7 @@ const onAdd = (event) => {
   axios.put(`/api/addresses/${addressId}`, {
     course_id: courseId
   }).then(() => {
-    console.log('Updaaaaaate!')
+    console.log('Update!')
   }).catch(error => {
     console.log(error.response.data)
   })

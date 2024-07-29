@@ -22,6 +22,15 @@ class Api::CoursesController < ApplicationController
     end
   end
 
+  def destroy
+    @course = Course.find(params[:id])
+    if @course.destroy
+      render json: { notice: 'コースを削除しました' }, status: :ok
+    else
+      render json: @course.errors, status: :unprocessable_entity
+    end
+  end
+
   def update_create_load_sheet
     @course = Course.find(params[:id])
     if @course.update(create_load_sheet_param)

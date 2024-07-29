@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
     resources :users, only: :index
     resources :sheets, only: [:index, :create, :show, :update, :destroy]
-    resources :courses, only: [:index, :create, :update] do
+    resources :courses, only: [:index, :create, :update, :destroy] do
       member do
         patch 'update_create_load_sheet'
       end

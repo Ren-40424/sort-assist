@@ -106,7 +106,18 @@ const submit = (id) => {
 
 //////////// コース削除機能 ////////////
 const deleteCourse = (courseId) => {
-  
+  const conf = confirm('コースを削除しますか？')
+  if (conf) {
+    axios.delete(`/api/courses/${courseId}`,{
+      params: {
+        id: courseId
+      }
+    }).then(() => {
+      emit('courseUpdated')
+    }).catch(error => {
+      console.log(error)
+    })
+  }
 }
 
 </script>
