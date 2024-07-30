@@ -20,7 +20,7 @@ Rails.application.routes.draw do
         patch 'update_create_load_sheet'
       end
     end
-    resources :addresses, only: [:index, :create, :update]
+    resources :addresses, only: [:index, :create, :update, :destroy]
     resources :roles, only: :index
   end
   get '*path', to: 'workspaces#index', constraints: ->(req) { req.format.html? }

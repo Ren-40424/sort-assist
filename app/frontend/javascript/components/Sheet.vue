@@ -99,17 +99,16 @@ const submit = (id) => {
 //////////// シート削除機能 ////////////
 const deleteSheet = async (id) => {
   const conf = confirm('表を削除しますか？')
-  if (conf) {
-    await axios.delete(`/api/sheets/${id}`,{
-      params: {
-        id: id
-      }
-    }).then(() => {
-      emit('sheetUpdated');
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  if (!conf) return;
+  await axios.delete(`/api/sheets/${id}`,{
+    params: {
+      id: id
+    }
+  }).then(() => {
+    emit('sheetUpdated');
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 //////////// レスポンシブ対応 ////////////

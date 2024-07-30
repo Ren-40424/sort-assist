@@ -22,9 +22,19 @@ class Api::AddressesController < ApplicationController
     end
   end
 
+  def destroy
+    @address = Address.find(params[:id])
+    if @address.destroy
+      render json: { notice: '住所を削除しました' }, status: :ok
+    else
+      render json: @address.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def address_params
-    params.require(:address).permit(:district, :address_from, :address_to, :name, :explanation, :load_place, :sheet_id, :course_id)
+    params.require(:address).permit(:district, :address_from, :address_to, :name, :explanation, :load_place, :sheet_id,
+                                    :course_id)
   end
 end

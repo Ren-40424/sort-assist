@@ -16,6 +16,7 @@
   <div class="addresses-box">
     <div class="addresses-box-header">
       <div class="addresses-box-title">住所一覧</div>
+      <VueDraggable v-model="addresses" group="addresses" @add="deleteAddress" class="delete-address" ghostClass="ghost">削除</VueDraggable>
       <div class="addresses-box-menu">
         <SheetAddAddress @addressAdded="getAddresses" :sheetId="sheetId"></SheetAddAddress>
       </div>
@@ -110,6 +111,17 @@ const removeAddress = (course, addressId) => {
   })
 }
 
+//////////// 住所削除機能 ////////////
+const deleteAddress = async (event) => {
+  const id = event.item.dataset.addressId
+  const response = await axios.delete(`/api/addresses/${id}`)
+  if (response.status === 200) {
+    getAddresses()
+  } else {
+    console.log(response)
+  }
+}
+
 //////////// メニュー管理 ////////////
 const visibleMenu = ref(null)
 const manageMenu = (courseId) => {
@@ -190,6 +202,14 @@ div {
   justify-content: space-between;
   padding: 5px 10px 5px 5px;
   background-color: rgb(216, 216, 216);
+  position: relative;
+}
+
+.delete-address {
+  position: absolute;
+  right: 3rem;
+  height: 1rem;
+  width: 2rem;
 }
 
 .course {
@@ -212,5 +232,9 @@ div {
   display: flex;
   margin: 5px;
   height: 1.2em;
+}
+
+.ghost {
+  display: none;
 }
 </style>
