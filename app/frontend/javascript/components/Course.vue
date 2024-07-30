@@ -2,7 +2,7 @@
 <div :id="`course-${ course.id }`">
   <div class="course-header">
     <div class="course-icon" @click="toggleCreate">
-      <template v-if="createLoadSheet" class="course-icon">◆</template>
+      <template v-if="course.create_load_sheet" class="course-icon">◆</template>
       <template v-else class="course-icon">◇</template>
     </div>
     <div class="course-name">{{ course.name }}</div>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="modal-main">
-    <form @submit.prevent="submit(course.id)">
+    <form @submit.prevent="submit(selectedCourse.id)">
       <label for="course-name">コースの名前</label><br>
       <input type="text" class="input" id="input-course-name" v-model="selectedCourse.name" required="required"><br>
       <label for="input-course-explanation">コースの説明</label><br>
@@ -68,6 +68,10 @@ const toggleCreate = () => {
 const updateCreateLoadSheet = async (new_value) => {
   await axios.patch(`/api/courses/${props.course.id}/update_create_load_sheet`, {
     create_load_sheet: new_value
+  }).then(() => {
+    emit('courseUpdated')
+  }).catch((error) => {
+    console.log(error)
   })
 }
 
@@ -78,7 +82,7 @@ const menuClicked = (courseId) => {
 
 //////////// コース編集機能 ////////////
 const modal = ref(null)
-const selectedCourse = ref({ id: null, name: '', explanation: '' })
+const selectedCourse = ref({ id: null, name: '', explanation: '', create_load_sheet: null })
 const openModal = (course) => {
   Object.assign(selectedCourse.value, course)
   modal.value.showModal()
@@ -86,7 +90,7 @@ const openModal = (course) => {
 
 const closeModal = () => {
   modal.value.close()
-  selectedCourse.value = { id: null, name: '', explanation: '' }
+  selectedCourse.value = { id: null, name: '', explanation: '', create_load_sheet: null }
 }
 
 const submit = (id) => {
@@ -95,6 +99,7 @@ const submit = (id) => {
     course: {
       name: selectedCourse.value.name,
       explanation: selectedCourse.value.explanation,
+      create_load_sheet: selectedCourse.value.create_load_sheet,
     }
   }).then(() => {
     emit('courseUpdated');
@@ -107,17 +112,16 @@ const submit = (id) => {
 //////////// コース削除機能 ////////////
 const deleteCourse = (courseId) => {
   const conf = confirm('コースを削除しますか？')
-  if (conf) {
-    axios.delete(`/api/courses/${courseId}`,{
-      params: {
-        id: courseId
-      }
-    }).then(() => {
-      emit('courseUpdated')
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  if (!conf) return;
+  axios.delete(`/api/courses/${courseId}`,{
+    params: {
+      id: courseId
+    }
+  }).then(() => {
+    emit('courseUpdated')
+  }).catch(error => {
+    console.log(error)
+  })
 }
 
 </script>
