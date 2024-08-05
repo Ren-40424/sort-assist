@@ -15,6 +15,7 @@ class Api::SheetsController < ApplicationController
 
   def show
     @sheet = Sheet.find(params[:id])
+    render json: @sheet
   end
 
   def update

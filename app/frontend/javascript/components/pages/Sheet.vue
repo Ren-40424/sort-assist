@@ -1,5 +1,6 @@
 <template>
 <div class="sheet-wrapper">
+  <div v-if="sheet" class="sheet-name">{{ sheet.name }}</div>
   <div class="courses">
     <template v-for="(course) in courses">
       <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="fetchData">
@@ -16,7 +17,7 @@
   <div class="addresses-box">
     <div class="addresses-box-header">
       <div class="addresses-box-title">住所一覧</div>
-      <VueDraggable v-model="addresses" group="addresses" @add="deleteAddress" class="delete-address" ghostClass="ghost">削除</VueDraggable>
+      <VueDraggable v-model="addresses" group="addresses" @add="deleteAddress" class="delete-address" ghostClass="hidden">削除</VueDraggable>
       <div class="addresses-box-menu">
         <SheetAddAddress @addressAdded="getAddresses" :sheetId="sheetId"></SheetAddAddress>
       </div>
@@ -41,12 +42,14 @@ import Address from '../Address.vue'
 import { VueDraggable } from 'vue-draggable-plus';
 import { useRoute } from 'vue-router';
 
+const sheet = ref(null);
 const courses = ref([]);
 const addresses = ref([]);
-const routes = useRoute()
-const sheetId = ref(routes.params.id)
+const routes = useRoute();
+const sheetId = ref(routes.params.id);
 
 onMounted(() => {
+  getSheet()
   fetchData()
 })
 
@@ -55,7 +58,13 @@ const fetchData = () => {
   getAddresses()
 }
 
-// ビューからカレントページのsheet_idを受け取り、該当するsheet_idのコースを取得
+const getSheet = async () => {
+  const response = await axios.get(`/api/sheets/${sheetId.value}`)
+  sheet.value = response.data
+  console.log(response.data)
+}
+
+// カレントページのsheet_idを受け取り、該当するsheet_idのコースを取得
 const getCourses = async () => {
   const response = await axios.get('/api/courses', {
     params: {
@@ -154,6 +163,12 @@ div {
   user-select: none;
 }
 
+.sheet-name {
+  font-size: 36px;
+  text-align: center;
+  padding: 10px 0;
+}
+
 .sheet-wrapper {
   height: 100%;
   width: 100%;
@@ -161,11 +176,11 @@ div {
 
 .courses {
   display: flex;
-  gap: 15px;
-  margin: 0 auto;
+  gap: 20px;
+  margin: auto;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding: 0 160px 0 80px;
+  padding: 10px 160px 10px 80px;
 }
 
 .courses::-webkit-scrollbar {
@@ -181,16 +196,16 @@ div {
 }
 
 .course-addresses {
-  height: 400px;
+  height: 375px;
   width: 250px;
+  padding: 5px;
 }
 
 .addresses-box {
   background-color: white;
   width: 80%;
   height: 30vh;
-  border: 3px solid #555555;
-  border-radius: 5px 5px 0 0;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
   position: fixed;
   left: 10%;
   bottom: 0
@@ -201,7 +216,7 @@ div {
   height: 2em;
   justify-content: space-between;
   padding: 5px 10px 5px 5px;
-  background-color: rgb(216, 216, 216);
+  background-color: rgb(220, 220, 220);
   position: relative;
 }
 
@@ -226,15 +241,26 @@ div {
 
 .address {
   width: max-content;
+  min-width: 50px;
   padding: 0 5px;
   background-color: rgb(216, 216, 216);
   border-radius: 5px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 5px;
-  height: 1.2em;
+  height: 1.4em;
 }
 
-.ghost {
+.delete-address {
+  background-color: rgb(255, 120, 120);
+  color: white;
+  height: max-content;
+  width: max-content;
+  padding: 2px 4px;
+}
+
+.hidden {
   display: none;
 }
 </style>
