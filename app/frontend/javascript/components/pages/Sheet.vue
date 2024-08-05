@@ -199,6 +199,9 @@ div {
   height: 375px;
   width: 250px;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .addresses-box {
@@ -241,7 +244,8 @@ div {
 
 .address {
   width: max-content;
-  min-width: 50px;
+  min-width: 120px;
+  max-width: 200px;
   padding: 0 5px;
   background-color: rgb(216, 216, 216);
   border-radius: 5px;

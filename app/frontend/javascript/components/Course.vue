@@ -1,9 +1,8 @@
 <template>
 <div :id="`course-${ course.id }`">
   <div class="course-header">
-    <div class="course-icon" @click="toggleCreate">
-      <template v-if="course.create_load_sheet" class="course-icon">◆</template>
-      <template v-else class="course-icon">◇</template>
+    <div class="course-icon" :class="{ active: course.create_load_sheet }" @click="toggleCreate">
+      ◆
     </div>
     <div class="course-name">{{ course.name }}</div>
     <div class="course-menu-button" @click="menuClicked(course.id)">・・・</div>
@@ -130,13 +129,12 @@ const deleteCourse = (courseId) => {
 [id^='course-'] {
   height: 400px;
   width: 250px;
-  border: 3px solid rgb(70, 70, 70);
-  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
 }
 
 .course-header {
-  border-bottom: 3px solid rgb(70, 70, 70);
-  background-color: rgb(216, 216, 216);
+  background-color: rgb(220, 220, 220);
   height: 25px;
   display: flex;
   align-items: center;
@@ -148,9 +146,15 @@ const deleteCourse = (courseId) => {
   font-size: 14px;
   font-weight: bolder;
   position: absolute;
-  left: 5px;
+  left: 8px;
   bottom: 3.5px;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 0px 3px rgb(100, 100, 100);
+}
+
+.active {
   color: #28385E;
+  text-shadow: none;
 }
 
 .course-menu-button {
