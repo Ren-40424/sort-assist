@@ -95,7 +95,7 @@ const sidebarUpdated = () => {
   padding: 20px 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .side-bar {
     transform: translateX(-300px);
   }

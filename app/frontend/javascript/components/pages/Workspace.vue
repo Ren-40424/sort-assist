@@ -70,7 +70,7 @@ watch(
   z-index: 0;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1080px) {
   .workspace-container {
     min-width: calc(100% - 300px);
   }
@@ -81,7 +81,7 @@ watch(
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   .workspace-container {
     max-width: 100%;
     padding: 20px 0;

@@ -61,7 +61,6 @@ const fetchData = () => {
 const getSheet = async () => {
   const response = await axios.get(`/api/sheets/${sheetId.value}`)
   sheet.value = response.data
-  console.log(response.data)
 }
 
 // カレントページのsheet_idを受け取り、該当するsheet_idのコースを取得
@@ -240,20 +239,6 @@ div {
   height: max-content;
   display: flex;
   flex-wrap: wrap;
-}
-
-.address {
-  width: max-content;
-  min-width: 120px;
-  max-width: 200px;
-  padding: 0 5px;
-  background-color: rgb(216, 216, 216);
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
-  height: 1.4em;
 }
 
 .delete-address {

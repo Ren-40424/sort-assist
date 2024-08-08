@@ -24,7 +24,7 @@ const updateRouterView = () => {
   overflow-x: hidden;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1080px) {
   .router-view {
     max-width: calc(100% - 300px);
     transform: translateX(300px);

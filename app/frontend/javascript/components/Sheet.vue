@@ -112,9 +112,9 @@ const deleteSheet = async (id) => {
 }
 
 //////////// レスポンシブ対応 ////////////
-const isTightScreen = ref(window.innerWidth < 1024)
+const isTightScreen = ref(window.innerWidth < 1080)
 const handleResize = () => {
-  isTightScreen.value = window.innerWidth < 1024
+  isTightScreen.value = window.innerWidth < 1080
 }
 
 onMounted(() => {
