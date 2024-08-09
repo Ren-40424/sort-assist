@@ -31,6 +31,17 @@ class Api::AddressesController < ApplicationController
     end
   end
 
+  def update_load_place
+    addresses_params = params.require(:addresses).map do |address|
+      address.permit(:id, :load_place)
+    end
+    addresses_params.each do |address_data|
+      address = Address.find(address_data[:id])
+      address.update(address_data.except(:id))
+    end
+    head :no_content
+  end
+
   private
 
   def address_params

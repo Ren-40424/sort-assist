@@ -4,7 +4,7 @@
   <div class="courses">
     <template v-for="(course) in courses">
       <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="fetchData">
-        <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd">
+        <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd" @update="updateLoadPlace(course.addresses)">
           <template v-for="(address) in course.addresses">
             <Address :address="address" @click="removeAddress(course, address.id)"></Address>
           </template>
@@ -71,6 +71,14 @@ const getCourses = async () => {
     }
   })
   courses.value = response.data
+  sort()
+}
+
+//////////// 各コースの住所をload_place順に並び変える ////////////
+const sort = () => {
+  courses.value.forEach((course) => {
+    course.addresses.sort((a, b) => a.load_place - b.load_place)
+  })
 }
 
 const getAddresses = async () => {
@@ -116,6 +124,21 @@ const removeAddress = (course, addressId) => {
     addresses.value.push(item)
   }).catch(error => {
     console.log(error.response.data)
+  })
+}
+
+//////////// 住所の順番変更時にload_placeを更新する ////////////
+const updateLoadPlace = async (addresses) => {
+  let i = 0
+  const params = []
+  for (const address of addresses) {
+    address.load_place = i
+    params.push({ id: address.id, load_place: i })
+    i++
+  }
+
+  await axios.patch('/api/addresses/update_load_place', {
+    addresses: params
   })
 }
 
