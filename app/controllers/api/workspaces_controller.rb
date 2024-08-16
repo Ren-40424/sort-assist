@@ -16,7 +16,11 @@ class Api::WorkspacesController < ApplicationController
 
   def show
     @workspace = Workspace.find(params[:id])
-    render json: @workspace
+    if @workspace.users.any? { |user_data| user_data[:user].id == current_user.id }
+      render json: @workspace
+    else
+      render status: :forbidden
+    end
   end
 
   def update

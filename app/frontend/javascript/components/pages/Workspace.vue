@@ -24,31 +24,33 @@
 <script setup>
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import SheetList from '../SheetList.vue'
 import WorkspaceUserList from '../WorkspaceUserList.vue'
 
 const route = useRoute()
+const router = useRouter()
 const routeKey = ref(route.fullPath)
 const workspaceId = ref(route.params.id)
 const workspace = ref(null)
 
 const fetchWorkspaceData = async (id) => {
-  const response = await axios.get(`/api/workspaces/${id}`)
-  return response.data
-}
-
-const fetchData = async (id) => {
-  workspace.value = await fetchWorkspaceData(id)
+  await axios.get(`/api/workspaces/${id}`).then((response) => {
+    workspace.value = response.data
+  }).catch((error) => {
+    if (error.response && error.response.status === 403) {
+      router.push('/');
+    }
+  })
 }
 
 onMounted(() => {
-  fetchData(workspaceId.value)
+  fetchWorkspaceData(workspaceId.value)
 })
 
 watch(() => route.params.id, (newId) => {
   workspaceId.value = newId
-  fetchData(workspaceId.value)
+  fetchWorkspaceData(workspaceId.value)
 })
 
 watch(
