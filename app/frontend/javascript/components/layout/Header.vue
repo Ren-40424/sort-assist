@@ -35,7 +35,7 @@ const logout = async () => {
 
 .header {
   background-color: #444444;
-  height: 5vh;
+  height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
