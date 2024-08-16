@@ -35,11 +35,16 @@ class Api::AddressesController < ApplicationController
     addresses_params = params.require(:addresses).map do |address|
       address.permit(:id, :load_place)
     end
-    addresses_params.each do |address_data|
-      address = Address.find(address_data[:id])
-      address.update(address_data.except(:id))
+    Address.transaction do
+      addresses_params.each do |address_data|
+        address = Address.find(address_data[:id])
+
+        raise ActiveRecord::Rollback unless address.update(address_data.except(:id))
+      end
+      head :no_content
+    rescue ActiveRecord::Rollback
+      render json: { errors: '更新に失敗しました' }, status: :unprocessable_entity
     end
-    head :no_content
   end
 
   private

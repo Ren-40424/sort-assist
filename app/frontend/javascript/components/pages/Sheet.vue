@@ -4,7 +4,7 @@
   <div class="courses">
     <template v-for="(course) in courses">
       <Course :course="course" :addresses="course.addresses" :visibleMenu="visibleMenu" @clicked="manageMenu" @courseUpdated="fetchData">
-        <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" @add="onAdd" @update="updateLoadPlace(course.addresses)">
+        <VueDraggable v-model="course.addresses" group="addresses" :data-course-id="course.id" class="course-addresses" ghostClass="ghost" @add="onAdd($event, course)" @update="updateLoadPlace(course)">
           <template v-for="(address) in course.addresses">
             <Address :address="address" @click="removeAddress(course, address.id)"></Address>
           </template>
@@ -22,7 +22,7 @@
         <SheetAddAddress @addressAdded="getAddresses" :sheetId="sheetId"></SheetAddAddress>
       </div>
     </div>
-    <VueDraggable v-model="addresses" group="addresses" class="addresses" @add="onAdd">
+    <VueDraggable v-model="addresses" group="addresses" class="addresses" @add="onAdd" ghostClass="ghost">
       <template v-for="(address) in addresses">
         <Address :address="address"></Address>
       </template>
@@ -95,10 +95,8 @@ const getAddresses = async () => {
 
 //////////// ドラッグアンドドロップで住所を各コースに配置する機能 ////////////
 
-// 追加予定：ドラッグ中のみ要素の色を変える //
-
 // 住所がコースにドラッグアンドドロップされた時にcourse_idを更新
-const onAdd = (event) => {
+const onAdd = (event, course) => {
   const addressId = event.item.dataset.addressId;
   let courseId = event.to.dataset.courseId
   // 住所一覧に戻された場合はcourse_idをnullに戻す
@@ -112,6 +110,7 @@ const onAdd = (event) => {
   }).catch(error => {
     console.log(error.response.data)
   })
+  updateLoadPlace(course)
 }
 
 // コースに配置された住所をクリックした時に住所一覧に戻す
@@ -128,10 +127,12 @@ const removeAddress = (course, addressId) => {
 }
 
 //////////// 住所の順番変更時にload_placeを更新する ////////////
-const updateLoadPlace = async (addresses) => {
+const updateLoadPlace = async (course) => {
+  if (!course.create_load_sheet) return
+
   let i = 0
   const params = []
-  for (const address of addresses) {
+  for (const address of course.addresses) {
     address.load_place = i
     params.push({ id: address.id, load_place: i })
     i++
@@ -139,6 +140,8 @@ const updateLoadPlace = async (addresses) => {
 
   await axios.patch('/api/addresses/update_load_place', {
     addresses: params
+  }).catch(error => {
+    console.log(error.response.data)
   })
 }
 
@@ -206,8 +209,8 @@ div {
 }
 
 .courses::-webkit-scrollbar {
-  height: 8px;
-  border-radius: 4px;
+  height: 10px;
+  border-radius: 3px;
   background-color: #ebebeb; 
 }
 
@@ -270,6 +273,10 @@ div {
   height: max-content;
   width: max-content;
   padding: 2px 4px;
+}
+
+.ghost {
+  opacity: 0.3;
 }
 
 .hidden {
