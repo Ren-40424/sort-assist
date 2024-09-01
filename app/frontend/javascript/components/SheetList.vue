@@ -1,7 +1,7 @@
 <template>
 <div class="sheet-list">
   <div class="sheet-list-top">
-    <strong>表一覧：</strong>
+    <strong>表一覧</strong>
     <SheetCreate @sheetAdded="getSheets" :workspaceId="workspaceId"></SheetCreate>
   </div>
   <div class="sheets">
@@ -36,6 +36,7 @@ import SheetCreate from './SheetCreate.vue';
 
 const props = defineProps({
   workspaceId: String,
+  roleId: String,
 })
 
 onMounted(() => {
@@ -104,6 +105,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  gap: 10px;
 }
 
 .sheets {

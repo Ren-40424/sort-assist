@@ -1,30 +1,45 @@
 <template>
   <div>
-    <WorkspaceList :workspaces="workspaces" @workspaceUpdated="fetchWorkspaces"></WorkspaceList>
+    <WorkspaceList/>
     <CreateWorkspace @workspaceCreated="addWorkspace"/>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 import CreateWorkspace from './WorkspaceCreate.vue'
 import WorkspaceList from './WorkspaceList.vue'
 import axios from 'axios'
 
-const workspaces = ref([])
-const emit = defineEmits(['sidebarUpdated'])
-const fetchWorkspaces = async (isCurrentPage) => {
-  const response = await axios.get('/api/workspaces')
-  workspaces.value = response.data
-  // 現在開いているワークスペースの内容を編集した際に再レンダリングするための処理
-  if (isCurrentPage) {
-    emit('sidebarUpdated')
-  }
+// フェッチしたワークスペースをPiniaで管理
+import { useWorkspacesStore } from '../stores/workspaces'
+const workspacesStore = useWorkspacesStore()
+
+// Piniaを初期化
+const fetchWorkspaces = async () => {
+  workspacesStore.isLoading = true
+  await axios.get('/api/workspaces').then((response) => {
+    workspacesStore.$patch({
+      workspaces: response.data
+    })
+  }).then(() => {
+    workspacesStore.isLoading = false
+  }).catch((error) => {
+    console.log(error.response.data)
+  })
 }
 
+// Piniaのストアに作成したワークスペースを追加
 const addWorkspace = (newWorkspace) => {
-  workspaces.value.push(newWorkspace)
+  workspacesStore.add({
+    id: newWorkspace.id,
+    name: newWorkspace.name,
+    explanation: newWorkspace.explanation,
+    users: []
+  })
 }
 
-fetchWorkspaces()
+onMounted(() => {
+  fetchWorkspaces()
+})
 </script>

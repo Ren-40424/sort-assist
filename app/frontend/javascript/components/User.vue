@@ -1,7 +1,7 @@
 <template>
 <tr>
-  <td><a :href='userUrl'>{{ userName }}</a></td>
-  <td>{{ userRole }}</td>
+  <td><a :href='userUrl'>{{ user.name }}</a></td>
+  <td>{{ userRole.name }}</td>
 </tr>
 </template>
 
@@ -13,17 +13,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  roles: {
-    type: Object,
-    required: true,
-  },
 })
 
-const userName = props.workspaceUser.user.name
+const user = props.workspaceUser.user
 const userUrl = ref(`/users/${props.workspaceUser.user.id}`)
-const userRole = props.roles.find(
-  role => role.attributes.id === props.workspaceUser.role_id
-).attributes.name;
+const userRole = props.workspaceUser.role.attributes
 </script>
 
 <style scoped>

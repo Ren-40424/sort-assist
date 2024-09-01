@@ -8,12 +8,11 @@ Rails.application.routes.draw do
   end
   namespace :api do
     resources :sessions, only: :show
-    resources :workspaces, only: [:index, :create, :show, :update, :destroy] do
+    resources :workspaces, only: [:index, :create, :update, :destroy] do
       collection do
         post 'add_user'
       end
     end
-    resources :users, only: :index
     resources :sheets, only: [:index, :create, :show, :update, :destroy]
     resources :courses, only: [:index, :create, :update, :destroy] do
       member do

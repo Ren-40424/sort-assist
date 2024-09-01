@@ -2,7 +2,7 @@
 <div class="user-list">
   <div class="user-list-top">
     <strong>ユーザー一覧：</strong>
-    <WorkspaceAddUser @userAdded="getUsers" :workspaceId="workspaceId"></WorkspaceAddUser>
+    <WorkspaceAddUser :workspaceId="workspaceId"></WorkspaceAddUser>
   </div>
 
   <table>
@@ -18,7 +18,7 @@
     <table>
       <tbody>
         <template v-for="(workspaceUser) in workspaceUsers">
-          <User :workspaceUser="workspaceUser" :roles="roles"></User>
+          <User :workspaceUser="workspaceUser"></User>
         </template>
       </tbody>
     </table>
@@ -27,31 +27,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios';
+import { ref } from 'vue'
 import WorkspaceAddUser from './WorkspaceAddUser.vue';
 import User from './User.vue';
+import { useWorkspacesStore } from '../stores/workspaces';
+import { useRoute } from 'vue-router';
 
-const props = defineProps({
-  workspaceId: String,
-})
+const route = useRoute()
+const workspaceId = ref(route.params.id)
 
-onMounted(() => {
-  getUsers()
-})
-
-const workspaceUsers = ref(null)
-const roles = ref(null)
-const getUsers = async () => {
-  const usersResponse = await axios.get('/api/users', {
-    params: {
-      workspace_id: props.workspaceId
-    }
-  })
-  const rolesResponse = await axios.get('/api/roles')
-  workspaceUsers.value = usersResponse.data
-  roles.value = rolesResponse.data
-}
+const workspacesStore = useWorkspacesStore()
+const currentWorkspace = workspacesStore.findWorkspace(workspace => workspace.id == workspaceId.value)
+const workspaceUsers = currentWorkspace.users
 </script>
 
 <style scoped>

@@ -40,6 +40,8 @@ const logout = async () => {
   display: flex;
   align-items: center;
   color: #ffffff;
+  position: sticky;
+  top: 0;
 }
 
 .user-auth-button {

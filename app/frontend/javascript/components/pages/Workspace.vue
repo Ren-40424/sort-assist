@@ -1,5 +1,9 @@
 <template>
-<div v-if="workspace" class="workspace-container">
+<!-- ロードインジケータのコンポーネントを作ろう -->
+<div v-if="workspacesStore.isLoading">
+  ロード中...
+</div>
+<div v-else-if="workspace" class="workspace-container">
   <div class="workspace-name">
     {{ workspace.name }}
   </div>
@@ -11,18 +15,13 @@
         <strong>説明</strong><br><br>
         {{ workspace.explanation }}<br><br>
       </div>
-      <WorkspaceUserList :key="routeKey" :workspaceId="workspaceId"></WorkspaceUserList>
+      <WorkspaceUserList :key="routeKey" :workspaceUsers="workspace.users"></WorkspaceUserList>
     </div>
   </div>
-</div>
-<!-- ロードインジケータのコンポーネントを作ろう -->
-<div v-else>
-  ロード中...
 </div>
 </template>
 
 <script setup>
-import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import SheetList from '../SheetList.vue'
@@ -32,36 +31,44 @@ const route = useRoute()
 const router = useRouter()
 const routeKey = ref(route.fullPath)
 const workspaceId = ref(route.params.id)
+
+import { useWorkspacesStore } from '../../stores/workspaces';
+const workspacesStore = useWorkspacesStore()
 const workspace = ref(null)
 
-const fetchWorkspaceData = async (id) => {
-  await axios.get(`/api/workspaces/${id}`).then((response) => {
-    workspace.value = response.data
-  }).catch((error) => {
-    if (error.response && error.response.status === 403) {
-      router.push('/');
-    }
-  })
+// 表示するワークスペースを変更する処理
+const changeWorkspace = (id) => {
+  const currentWorkspace = workspacesStore.findWorkspace(workspace => workspace.id == id)
+  if (currentWorkspace) {
+    workspace.value = currentWorkspace
+    workspacesStore.isLoading = false
+    // 他人のワークスペースへのアクセスを試みた場合ホームページへリダイレクト
+  } else if (!currentWorkspace && !workspacesStore.isLoading) {
+    router.push('/')
+  }
 }
 
 onMounted(() => {
-  fetchWorkspaceData(workspaceId.value)
+  changeWorkspace(workspaceId.value)
 })
 
 watch(() => route.params.id, (newId) => {
   workspaceId.value = newId
-  fetchWorkspaceData(workspaceId.value)
+  changeWorkspace(workspaceId.value)
 })
 
-watch(
-  () => route.fullPath,
-  (newPath, oldPath) => {
-    if (newPath !== oldPath) {
-      routeKey.value = newPath;
-    }
+watch(() => route.fullPath, (newPath, oldPath) => {
+  if (newPath !== oldPath) {
+    routeKey.value = newPath;
   }
-);
+});
 
+workspacesStore.$subscribe((mutation) => {
+  if (mutation.type === 'patch object') {
+    workspacesStore.isLoading = false
+    changeWorkspace(workspaceId.value)
+  }
+})
 </script>
 
 <style scoped>

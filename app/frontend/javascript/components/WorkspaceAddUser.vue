@@ -61,6 +61,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import axios from 'axios';
+import { useWorkspacesStore } from '../stores/workspaces';
 
 // モーダル開閉用
 const modal = ref(null)
@@ -149,18 +150,20 @@ const formatParams = (users, allowedId) => {
   return params
 }
 
-const emit = defineEmits(['userAdded'])
-const submit = () => {
+const workspacesStore = useWorkspacesStore()
+const workspace = workspacesStore.findWorkspace(item => item.id == props.workspaceId)
+
+const submit = async () => {
   const params = formatParams(usersData.value, allowedEditUsers.value)
   if (usersData.value.length === 0) return
   
-  axios.post('/api/workspaces/add_user', {
-    workspace_user: params
-  }).then(() => {
-    emit('userAdded')
+  await axios.post('/api/workspaces/add_user', {
+    workspace_users: params
+  }).then((response) => {
+    // ストアのUsersに保存
+    workspace.users.push(...response.data.users)
     closeModal()
   })
-  
 }
 </script>
 

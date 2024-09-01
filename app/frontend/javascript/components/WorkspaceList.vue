@@ -1,7 +1,7 @@
 <template>
-  <div class="list-top">ワークスペース一覧</div>
+<div class="list-top">ワークスペース一覧</div>
 <ul>
-  <li v-for="workspace in workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
+  <li v-for="workspace in workspacesStore.workspaces" :key="workspace.id" class="workspace-list" :class="{ active: currentWorkspaceId == workspace.id || visibleMenu === workspace.id }">
     <router-link :to="{ name: 'Workspace', params: { id: workspace.id } }" class="workspace-link">
       {{ workspace.name }}
     </router-link>
@@ -37,9 +37,9 @@ import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 
-const props = defineProps({
-  workspaces: Array
-});
+// ストアを使用
+import { useWorkspacesStore } from '../stores/workspaces';
+const workspacesStore = useWorkspacesStore()
 
 //////////// 表示中のワークスペースを目立たせる ////////////
 const route = useRoute()
@@ -98,11 +98,27 @@ const closeModal = () => {
 const emit = defineEmits(['workspaceUpdated']);
 const submit = (id) => {
   if (!selectedWorkspace.value.name) return;
+
+  const params = {
+    name: selectedWorkspace.value.name,
+    explanation: selectedWorkspace.value.explanation
+  }
+
   axios.put(`/api/workspaces/${id}`, {
-    workspace: selectedWorkspace.value
-  }).then(() => {
-    emit('workspaceUpdated', id == route.params.id);
+    workspace: params
+
+  }).then((response) => {
+    // ワークスペースの更新内容をPiniaに反映
+    const targetWorkspace = workspacesStore.findWorkspace(item => item.id == id)
+    workspacesStore.$patch(state => {
+      const workspaceIndex = state.workspaces.findIndex(item => item.id === targetWorkspace.id)
+      const workspaceResponse = response.data.workspace
+
+      state.workspaces[workspaceIndex].name = workspaceResponse.name
+      state.workspaces[workspaceIndex].explanation = workspaceResponse.explanation
+    })
     closeModal()
+    
   }).catch(error => {
     console.log(error);
   });
@@ -117,11 +133,13 @@ const deleteWorkspace = async (id) => {
       params: {
         id: id
       }
-    }).then(() => {
+    }).then((response) => {
       if (currentWorkspaceId.value == id) {
         router.replace('/')
       }
-      emit('workspaceUpdated');
+      // 対象のワークスペースをPiniaのストアからも削除
+      workspacesStore.remove(response.data.workspace)
+
     }).catch(error => {
       console.log(error)
     })

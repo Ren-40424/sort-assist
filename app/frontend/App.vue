@@ -1,20 +1,15 @@
 <template>
   <Header></Header>
-  <Sidebar @sidebarUpdated="updateRouterView"></Sidebar>
+  <Sidebar></Sidebar>
   <div class="router-view">
-    <router-view :key="updateDate"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup>
 import Sidebar from './javascript/components/layout/Sidebar.vue';
 import Header from './javascript/components/layout/Header.vue';
-import { ref } from 'vue';
 
-const updateDate = ref(null)
-const updateRouterView = () => {
-  updateDate.value = Date.now()
-}
 </script>
 
 <style scoped>

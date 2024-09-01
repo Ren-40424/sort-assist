@@ -1,12 +1,23 @@
 import { defineStore } from 'pinia'
 
-export const useWorkspacesStore = defineStore('workspaces', {
+export const useWorkspacesStore = defineStore('workspacesStore', {
   state: () => ({
     workspaces: [],
+    isLoading: false,
   }),
-  actions: {
-    getById(id) {
-      this.find(element => element.id === id)
+  getters: {
+    findWorkspace: (state) => (predicate) => {
+      return Object.values(state.workspaces).find(predicate)
     }
+  },
+  actions: {
+    add(workspace) {
+      this.workspaces.push(workspace)
+    },
+
+    remove(workspace) {
+      const newArray = this.workspaces.filter(item => item.id !== workspace.id)
+      this.workspaces = newArray
+    },
   }
 })
