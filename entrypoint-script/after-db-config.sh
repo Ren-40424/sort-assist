@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-sourse .env
+source .env
 rm -f tmp/pids/server.pid
 
 retry_count=0
