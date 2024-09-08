@@ -24,3 +24,5 @@ RUN yarn install
 COPY . /app
 
 RUN yarn vite build
+
+ENTRYPOINT ["./entrypoint.sh"]
