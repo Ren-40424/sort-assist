@@ -9,7 +9,7 @@ COPY entrypoint.sh ./
 COPY entrypoint-script/wait-for-it.sh /entrypoint-script/wait-for-it.sh
 COPY entrypoint-script/after-db-config.sh /entrypoint-script/after-db-config.sh
 
-RUN chmod +x entrypoint.sh entrypoint-script/wait-for-it.sh entrypoint-script/after-db-config.sh
+RUN ls -l entrypoint.sh && chmod +x entrypoint.sh entrypoint-script/wait-for-it.sh entrypoint-script/after-db-config.sh && ls -l entrypoint.sh
 
 WORKDIR /app
 
