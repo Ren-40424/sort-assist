@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+sourse .env
 rm -f tmp/pids/server.pid
 
 retry_count=0
@@ -11,8 +12,8 @@ while [ "$retry_count" -lt "$max_retries" ]; do
     break
   else
     echo "Creating database or applying migrations..."
-    rails db:create
-    rails db:migrate
+    RAILS_ENV=$ENVIRONMENT rails db:create 
+    RAILS_ENV=$ENVIRONMENT rails db:migrate
   fi
   
   version=$(rails db:version | grep -o '[0-9]\+')
@@ -30,4 +31,4 @@ if [ "$retry_count" -ge "$max_retries" ]; then
   exit 1
 fi
 
-rails s -p 3000 -b '0.0.0.0'
+eval $SERVER_COMMAND
