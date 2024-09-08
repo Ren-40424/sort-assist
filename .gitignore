@@ -51,3 +51,6 @@ node_modules
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
 
+# Docker
+.env
+

@@ -6,22 +6,22 @@ development:
   <<: *default
   adapter: mysql2
   username: root
-  password:
-  host: localhost
+  password: <%= ENV['ROOT_PASS'] %>
+  host: db
   database: sort-assist_development
 
 test:
   <<: *default
   adapter: mysql2
   username: root
-  password:
-  host: localhost
+  password: <%= ENV['ROOT_PASS'] %>
+  host: db
   database: sort-assist_test
 
 production:
   <<: *default
   adapter: mysql2
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
+  socket: /var/run/mysqld/mysqld.sock
   database: sort-assist_production
-  username: root
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  socket: /var/lib/mysql/mysql.sock

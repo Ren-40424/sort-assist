@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
-  create_table "addresses", charset: "utf8", force: :cascade do |t|
+  create_table "addresses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "district", null: false
     t.string "address_from"
     t.string "address_to"
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
     t.index ["sheet_id"], name: "index_addresses_on_sheet_id"
   end
 
-  create_table "courses", charset: "utf8", force: :cascade do |t|
+  create_table "courses", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "explanation"
     t.boolean "create_load_sheet", default: false, null: false
@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
     t.index ["sheet_id"], name: "index_courses_on_sheet_id"
   end
 
-  create_table "sheets", charset: "utf8", force: :cascade do |t|
+  create_table "sheets", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "explanation"
     t.bigint "workspace_id"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
     t.index ["workspace_id"], name: "index_sheets_on_workspace_id"
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "workspace_users", charset: "utf8", force: :cascade do |t|
+  create_table "workspace_users", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.bigint "workspace_id", null: false
     t.bigint "user_id", null: false
     t.integer "role_id", null: false
@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_25_114725) do
     t.index ["workspace_id"], name: "index_workspace_users_on_workspace_id"
   end
 
-  create_table "workspaces", charset: "utf8", force: :cascade do |t|
+  create_table "workspaces", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "explanation"
     t.datetime "created_at", null: false

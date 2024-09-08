@@ -28,5 +28,8 @@
     "vite-plugin-full-reload": "^1.1.0",
     "vite-plugin-ruby": "^5.0.0",
     "vue-template-compiler": "^2.7.16"
+  },
+  "scripts": {
+    "build": "vite build"
   }
 }

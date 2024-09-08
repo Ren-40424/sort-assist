@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      TZ: ${TZ}
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    entrypoint: ./entrypoint.sh
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
