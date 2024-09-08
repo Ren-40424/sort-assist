@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 3000:3000
+      - ${HOST_PORT}:3000
     entrypoint: ./entrypoint.sh
     depends_on:
       - db
