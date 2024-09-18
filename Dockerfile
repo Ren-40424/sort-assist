@@ -1,7 +1,7 @@
 FROM ruby:3.2.0
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs default-mysql-client
+    apt-get install -y nodejs
 
 RUN npm install -g yarn
 
@@ -9,7 +9,7 @@ COPY entrypoint.sh ./
 COPY entrypoint-script/wait-for-it.sh /entrypoint-script/wait-for-it.sh
 COPY entrypoint-script/after-db-config.sh /entrypoint-script/after-db-config.sh
 
-RUN ls -l entrypoint.sh && chmod +x entrypoint.sh entrypoint-script/wait-for-it.sh entrypoint-script/after-db-config.sh && ls -l entrypoint.sh
+RUN chmod +x /entrypoint.sh /entrypoint-script/wait-for-it.sh /entrypoint-script/after-db-config.sh
 
 WORKDIR /app
 
@@ -25,4 +25,4 @@ COPY . /app
 
 RUN yarn vite build
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

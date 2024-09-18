@@ -23,5 +23,5 @@ production:
   adapter: mysql2
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASS'] %>
-  socket: /var/run/mysqld/mysqld.sock
+  host: db
   database: sort-assist_production

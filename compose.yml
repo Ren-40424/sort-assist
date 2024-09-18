@@ -19,7 +19,8 @@ services:
       - ${HOST_PORT}:3000
     environment:
       RAILS_ENV: ${ENVIRONMENT}
-    entrypoint: ./entrypoint.sh
+      DB_USER: root
+      DB_PASS: ${ROOT_PASS}
     depends_on:
       - db
 

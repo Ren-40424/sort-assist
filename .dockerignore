@@ -1,5 +1,49 @@
-.rspec
-log
-tmp
-vendor/assets
+# Node modules
 node_modules
+/vite/node_modules
+
+# Temporary files and directories
+/tmp
+/log
+/pids
+/sockets
+
+# Precompiled assets
+public/assets
+public/packs
+public/vite
+
+# Rails-specific files
+.byebug_history
+.bundle
+
+# Git and version control related files
+.git
+.gitignore
+.gitattributes
+
+# OS-generated files (MacOS, Linux, Windows)
+*.swp
+*~
+.DS_Store
+*.bak
+*.tmp
+*.log
+*.sqlite3
+*.env
+
+# Coverage reports from testing
+coverage
+
+# Docker specific
+docker-compose.override.yml
+Dockerfile*
+
+# Database-related files
+db/*.sqlite3
+db/*.sqlite3-journal
+db/schema.rb
+db/structure.sql
+
+# Vite build output (JS build results)
+dist
