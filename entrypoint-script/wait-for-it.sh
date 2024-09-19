@@ -65,7 +65,7 @@ wait_for_wrapper()
         echoerr "$WAITFORIT_cmdname: timeout occurred after waiting $WAITFORIT_TIMEOUT seconds for $WAITFORIT_HOST:$WAITFORIT_PORT"
     fi
 
-    ./entrypoint-script/after-db-config.sh
+    /entrypoint-script/after-db-config.sh
     
     return $WAITFORIT_RESULT
 }
